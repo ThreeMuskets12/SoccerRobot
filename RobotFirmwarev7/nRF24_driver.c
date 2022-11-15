@@ -71,7 +71,7 @@ void nRF24_init(){ //You are in standby-1 at the end of this call
 	nRF24_write_to_register(SETUP_AW,3); //0000 0011 5 byte tx rx address fields
 	nRF24_write_to_register(SETUP_RETR,0); //0000 0000 no auto retransmission
 	nRF24_write_to_register(RF_CH,120); //0011 1111 first bit must be 0, 011 1111 = 63 freq = 2400 + 63 = 2463 = 2.463 GHz
-	nRF24_write_to_register(RF_SETUP,2); //0000 0010 1 Mbps and -12 db
+	nRF24_write_to_register(RF_SETUP,6); //0000 0010 1 Mbps and -12 db //SET BACK TO 2
 	uint8_t tx_address[] = {0xEE, 0xDD, 0xCC, 0xBB, 0xAA};
 	nRF24_write_to_register_multi_byte(TX_ADDR, &tx_address[0], 5); //Set TX addr as e7e7e7e7e7
 	nRF24_write_to_register(CONFIG,2); //0000 0020 enter standby-1, disable checksums
@@ -91,7 +91,7 @@ void nRF24_transmit(uint8_t *data){ //You should be in standby-1 at the beginnin
 
 uint8_t nRF_24_is_data_available(int pipe_num){
 	uint8_t status_reg;
-	status_reg = nRF24_read_from_register(CONFIG);
+	status_reg = nRF24_read_from_register(STATUS);
 	if((status_reg&(1<<6))&&(status_reg&(1<<1))){ //1<<6 is the data ready rx fifo interrupt and 1<<1 is the data from pipe 1 ready to read 
 		nRF24_write_to_register(STATUS, (1<<6)); //clear data ready rx fifo
 		return 1;
