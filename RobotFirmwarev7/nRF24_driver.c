@@ -61,7 +61,7 @@ void nRF24_send_SPI_command(uint8_t command){
 	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
 }
 
-void nRF24_SPI_init(){ //You are in standby-1 at the end of this call
+void nRF24_init(){ //You are in standby-1 at the end of this call
 	spi_m_sync_get_io_descriptor(&SPI_0, &spi_0_io);
 	spi_m_sync_enable(&SPI_0);
 	gpio_set_pin_level(RF24_CE, false); //Keeps us set to be ready to enter standby-1
@@ -72,8 +72,7 @@ void nRF24_SPI_init(){ //You are in standby-1 at the end of this call
 	nRF24_write_to_register(SETUP_RETR,0); //0000 0000 no auto retransmission
 	nRF24_write_to_register(RF_CH,120); //0011 1111 first bit must be 0, 011 1111 = 63 freq = 2400 + 63 = 2463 = 2.463 GHz
 	nRF24_write_to_register(RF_SETUP,2); //0000 0010 1 Mbps and -12 db
-	uint8_t tx_address[5];
-	memset(&tx_address[0], 231, sizeof(uint8_t)*5);
+	uint8_t tx_address[] = {0xEE, 0xDD, 0xCC, 0xBB, 0xAA};
 	nRF24_write_to_register_multi_byte(TX_ADDR, &tx_address[0], 5); //Set TX addr as e7e7e7e7e7
 	nRF24_write_to_register(CONFIG,2); //0000 0020 enter standby-1, disable checksums
 }
@@ -90,17 +89,43 @@ void nRF24_transmit(uint8_t *data){ //You should be in standby-1 at the beginnin
 	gpio_set_pin_level(RF24_CE, false); //Return to standby-1 mode!
 }
 
-void nRF24_power_up(){
-	nRF24_SPI_init();
-	gpio_set_pin_level(RF24_CE, false); //Keeps us set to be ready to enter standby-1
+uint8_t nRF_24_is_data_available(int pipe_num){
+	uint8_t status_reg;
+	status_reg = nRF24_read_from_register(CONFIG);
+	if((status_reg&(1<<6))&&(status_reg&(1<<1))){ //1<<6 is the data ready rx fifo interrupt and 1<<1 is the data from pipe 1 ready to read 
+		nRF24_write_to_register(STATUS, (1<<6)); //clear data ready rx fifo
+		return 1;
+	}
+	return 0;
 }
 
-void at_least_150ns_delay(){ //At this level, due to pipelining and predictive instruction execution, it is REALLY hard to delay in the ns resolution.
-//However, given that there is the need often to wait 150ns before doing something, this function should take AT LEAST 150ns to complete. (Actually much more).
-//One clock cycle is 3.3ns when master clock is 300 Mhz. Conditionals take longer than 1 clock cycle, and incrementing i is at least 1 clock cycle. Do this 75 times,
-//a conditional and an increment, and you get something that is guaranteed to be longer than 150ns.
-	int x = 0;
-	for(int i = 0; i < 75; i++){
-		x++;
-	}
+void nRF24_enter_receive(){ //You are in receive at the end of this call
+	uint8_t config_reg;
+	config_reg = nRF24_read_from_register(CONFIG);
+	config_reg = config_reg | 1; //XXXX XXX1 PRIM_RX to 1
+	nRF24_write_to_register(CONFIG, config_reg);
+	nRF24_write_to_register(EN_RXADDR, 2); //0000 0010 set data pipe 1 to on
+	uint8_t rx_address[] = {0xEE, 0xDD, 0xCC, 0xBB, 0xAA};
+	nRF24_write_to_register_multi_byte(RX_ADDR_P1, &rx_address[0], 5);
+	nRF24_write_to_register(RX_PW_P1,32); //32 bytes packet size
+	gpio_set_pin_level(RF24_CE, true);
+}
+
+void nRF24_receive_data(uint8_t *data_pointer){
+	uint8_t cmd = R_RX_PAYLOAD;
+	gpio_set_pin_level(RF24_CSN, false); //drive this low before doing SPI transmissions
+	io_write(spi_0_io, &cmd, 1);
+	io_read(spi_0_io, data_pointer, 32);
+	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
+	delay_us(11); //Make sure we had enough time to grab the data before flushing
+	cmd = FLUSH_RX;
+	nRF24_send_SPI_command(cmd);
+}
+
+void enter_standby(){
+	uint8_t config_reg;
+	config_reg = nRF24_read_from_register(CONFIG);
+	config_reg = config_reg & 254; //XXXX XXX0 PRIM_RX to 0
+	nRF24_write_to_register(CONFIG, config_reg);
+	gpio_set_pin_level(RF24_CE, false);
 }

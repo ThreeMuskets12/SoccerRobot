@@ -62,11 +62,16 @@ void nRF24_read_from_register_multi_byte(uint8_t registerd, uint8_t *data_pointe
 
 void nRF24_send_SPI_command(uint8_t command);
 
-extern void nRF24_SPI_init();
-
-void nRF24_power_up();
+extern void nRF24_init();
 
 void nRF24_transmit(uint8_t *data);
 
-void at_least_150ns_delay();
+void nRF24_receive_data(uint8_t *data_pointer);
+
+void nRF24_enter_receive();
+
+uint8_t nRF_24_is_data_available(int pipe_num);
+
+void enter_standby();
+
 #endif /* NRF24_DRIVER_H_ */

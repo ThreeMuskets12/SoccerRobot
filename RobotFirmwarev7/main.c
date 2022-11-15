@@ -19,7 +19,7 @@ int main(void)
 	
 	//init_IMU(&imu_vector_buffer[0]);
 	
-	nRF24_power_up();
+	nRF24_init();
 	delay_us(200); //Should be 200 us, setting higher for testing
 	
 	while (1) {
