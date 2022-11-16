@@ -40,43 +40,43 @@
 /* MOVE defines to driver init as externs*/
 
 //PWM channels
-#define CHANNEL_0 (0)
-#define CHANNEL_1 (1)
-#define CHANNEL_2 (2)
-#define CHANNEL_3 (3)
+#define CHANNEL_0 (0) // Pin D5
+#define CHANNEL_1 (1) // Pin D7
+#define CHANNEL_2 (2) // Pin D6
+#define CHANNEL_3 (3) // Pin A4
 
 /* PWM_PERIOD constant acts a prescaler for the chosen clock source. Use dividers in driver where appropriate to not overload software.*/ 
-/* calculate and test ~60Hz */
+/* On Atmel Start configure using master clock / 256 = 58.59 Hz */
+
 #define PWM_PERIOD 10000
-/* use this line to directly configure an entire instance (all four channels). Note: this is not typically needed */
-//pwm_set_parameters(&PWM_0, PWM_PERIOD, pwm_duty);
 
 //sets duty cycle / period of a specified PWM channel on a specified instance
 //use Atmel start to configure both instances
 //channel may be from 0-3
 void set_pwm_channel(struct _pwm_device *const device, uint8_t channel, uint32_t duty_cycle){
-	if((channel < 4) && (channel > 0)){
+	if((channel < 4) && (channel >= 0)){
 		hri_pwm_write_CDTYUPD_reg(device->hw, channel, duty_cycle); //set duty-cycle for channel
 		hri_pwm_write_CPRDUPD_reg(device->hw, channel, PWM_PERIOD); //set period for channel
 	}
 }
+
 /*
  * Functions for each individual motor for sake of processing time.
 */
-//motor 1
-void set_pmw_motor_1(struct _pwm_device *const device, uint8_t channel, uint32_t duty_cycle){
+//motor 0
+void set_pmw_motor_0(struct _pwm_device *const device, uint32_t duty_cycle){
 	set_pwm_channel(device, CHANNEL_0, duty_cycle);
 }
-//motor 2
-void set_pmw_motor_2(struct _pwm_device *const device, uint8_t channel, uint32_t duty_cycle){
+//motor 1
+void set_pmw_motor_1(struct _pwm_device *const device, uint32_t duty_cycle){
 	set_pwm_channel(device, CHANNEL_1, duty_cycle);
 }
-//motor 3
-void set_pmw_motor_3(struct _pwm_device *const device, uint8_t channel, uint32_t duty_cycle){
+//motor 2
+void set_pmw_motor_2(struct _pwm_device *const device,  uint32_t duty_cycle){
 	set_pwm_channel(device, CHANNEL_2, duty_cycle);
 }
-//motor 4
-void set_pmw_motor_4(struct _pwm_device *const device, uint8_t channel, uint32_t duty_cycle){
+//motor 3
+void set_pmw_motor_3(struct _pwm_device *const device, uint32_t duty_cycle){
 	set_pwm_channel(device, CHANNEL_3, duty_cycle);
 }
 
@@ -85,9 +85,11 @@ int main(void)
 	atmel_start_init();
 
 	pwm_enable(&PWM_0);
+	set_pmw_motor_0(&(PWM_0.device), 0);
+	set_pmw_motor_1(&(PWM_0.device), 5000);
+	set_pmw_motor_2(&(PWM_0.device), 9999);
 	
 	while (1) {
-
 		delay_ms(100);
 	}
 }
