@@ -52,6 +52,8 @@
 
 extern struct io_descriptor *spi_0_io;
 
+extern uint8_t* global_data_pointer;
+
 extern void nRF24_write_to_register(uint8_t registerd, uint8_t data);
 
 extern void nRF24_write_to_register_multi_byte(uint8_t registerd, uint8_t *data, int length);
@@ -62,11 +64,11 @@ void nRF24_read_from_register_multi_byte(uint8_t registerd, uint8_t *data_pointe
 
 void nRF24_send_SPI_command(uint8_t command);
 
-extern void nRF24_init();
+extern void nRF24_init(uint8_t *data_pointer);
 
 void nRF24_transmit(uint8_t *data);
 
-void nRF24_receive_data(uint8_t *data_pointer);
+void nRF24_receive_data();
 
 void nRF24_enter_receive();
 

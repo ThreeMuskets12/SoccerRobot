@@ -44,14 +44,11 @@ int main(void)
 	
 	//init_IMU(&imu_vector_buffer[0]);
 	
-	nRF24_init();
-	delay_us(200); //Should be 200 us, setting higher for testing
-	nRF24_enter_receive();
-	
 	uint8_t data_store[32];
 	memset(&data_store[0], 0, sizeof(uint8_t)*32);
-	pwm_enable(&PWM_0);
-	set_pmw_motor_0(&(PWM_0.device), 100);
+	nRF24_init(data_store);
+	delay_us(200); //Should be 200 us, setting higher for testing
+	nRF24_enter_receive();
 	while (1) {
 		/*There are two ways to read information from the IMU: See the driver manual for more information. Shown here is mode 0,
 		where the higher level robot code (which would typically run within this while(1) loop in main.c) calls get_IMU_quaternion()
@@ -73,16 +70,16 @@ int main(void)
 		IMU for new quaternion coefficients before it is ready with the next set of them. (also really only relevant for the demo code, in
 		reality it doesn't matter if we ask for coefficients before the IMU is ready with new ones, as the function will just return the last
 		valid coefficients it collected in the event that the IMU isn't ready with new ones) */
-		if(nRF_24_is_data_available(1)){ //There is data for me to collect :)
+		/*if(nRF_24_is_data_available(1)){ //There is data for me to collect :)
 			nRF24_receive_data(&data_store[0]);
-			/*for(int i = 0; i < 32; i++){
+			for(int i = 0; i < 32; i++){
 				printf("0x%02x\r\n", data_store[i]);
-			}*/
+			}
 			printf("%s\r\n",data_store); //If you want to print the received number to console you would have to add 48!!!
 			uint8_t m_period;
 			m_period = data_store[0];
 			set_pmw_motor_0(&(PWM_0.device), m_period);
 			memset(&data_store[0], 0, sizeof(uint8_t)*32);
-		}
+		}*/
 	}
 }

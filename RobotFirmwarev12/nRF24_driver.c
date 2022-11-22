@@ -7,74 +7,112 @@
 
 #include "nRF24_driver.h"
 
+/* The io_descriptor and pointer for the received byte array are declared. */
 struct io_descriptor *spi_0_io;
+uint8_t* global_data_pointer;
 
-void nRF24_write_to_register(uint8_t registerd, uint8_t data){ //SPI Command "W_REGISTER"
+/* This function takes in a byte indicating which of the nRF24's registers should be written to, and then a single byte of data to write to that register */
+void nRF24_write_to_register(uint8_t registerd, uint8_t data){
+	/* Initialize a 2 byte buffer to all zeros. Bits 7:5 will be the Write to Register SPI command word (001), and then bits 4:0 will be the 5 bit long register number to write to */
 	uint8_t buffer[2];
 	memset(&buffer[0], 0, sizeof(uint8_t)*2);
-	buffer[0] = buffer[0] | 32; //Command word (binary) = 001A AAAA. 32 = 0010 0000. This will place a 1 in the right position for the command word for W_REGISTER
-	buffer[0] = (buffer[0]) | registerd; //For example, if register 4 was passed in as a parameter. buffer[0] currently equals 32. 32|4 = 36. 36 = 0010 0100. This complies
-	//with what the chip is expecting of 001A AAAA, where AAAAA would equal 0100, or 4.
+	/* Set bits 7:5 to be equal to the Write to Register SPI command word (001). 32 = 0010 000. */
+	buffer[0] = buffer[0] | 32;
+	/* Set bits 4:0 to be equal to the 5 bit long register number to write to. If editing this code later, be careful not to use the word register as a variable, as it is a reserved
+	word by another library we use. */
+	buffer[0] = (buffer[0]) | registerd;
+	/* Set the second byte of the buffer equal to the passed in data to be written to the register */
 	buffer[1] = data;
-	gpio_set_pin_level(RF24_CSN, false); //drive this low before doing SPI transmissions
-	io_write(spi_0_io, buffer, 2); //Careful never to put too much math inside of here, you only get 38 clock cycles max between driving CSN to low and when data needs to start being transmitted
-	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
+	/* Send the constructed packet to the nRF24 over SPI */
+	gpio_set_pin_level(RF24_CSN, false); //Drive low before doing SPI transmissions
+	io_write(spi_0_io, buffer, 2); //Write the constructed 2 byte packet to the nRF24 over SPI
+	gpio_set_pin_level(RF24_CSN, true); //Drive back to high after doing SPI transmissions
 }
 
-void nRF24_write_to_register_multi_byte(uint8_t registerd, uint8_t *data, int length){ //SPI Command "W_REGISTER"
+/* This function takes in a byte indicating which of the nRF24's registers should be written to, a pointer to multiple bytes of data to be written to that register, and the length
+(in number of bytes) of the data to be sent to the register */
+void nRF24_write_to_register_multi_byte(uint8_t registerd, uint8_t *data, int length){
+	/* Initialize a 1 byte buffer to all zeros. Bits 7:5 will be the Write to Register SPI command word (001), and then bits 4:0 will be the 5 bit long register number to write to */
 	uint8_t buffer;
 	buffer = 0;
-	buffer = buffer | 32; //Command word (binary) = 001A AAAA. 32 = 0010 0000. This will place a 1 in the right position for the command word for W_REGISTER
-	buffer = buffer | registerd; //For example, if register 4 was passed in as a parameter. buffer[0] currently equals 32. 32|4 = 36. 36 = 0010 0100. This complies
-	//with what the chip is expecting of 001A AAAA, where AAAAA would equal 0100, or 4.
-	gpio_set_pin_level(RF24_CSN, false); //drive this low before doing SPI transmissions
-	io_write(spi_0_io, &buffer, 1);
-	io_write(spi_0_io, data, length); 
-	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
-}
-
-uint8_t nRF24_read_from_register(uint8_t registerd){ //SPI Command "R_REGISTER"
-	uint8_t in_byte;
-	uint8_t buffer;
-	buffer = 0;
+	/* Set bits 7:5 to be equal to the Write to Register SPI command word (001). 32 = 0010 000. */
+	buffer = buffer | 32;
+	/* Set bits 4:0 to be equal to the 5 bit long register number to write to. If editing this code later, be careful not to use the word register as a variable, as it is a reserved
+	word by another library we use. */
 	buffer = buffer | registerd;
-	gpio_set_pin_level(RF24_CSN, false); //drive this low before doing SPI transmissions
-	io_write(spi_0_io, &buffer, 1); //Careful never to put too much math inside of here, you only get 38 clock cycles max between driving CSN to low and when data needs to start being transmitted
-	io_read(spi_0_io, &in_byte, 1);
-	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
+	/* Send the constructed packet to the nRF24 over SPI */
+	gpio_set_pin_level(RF24_CSN, false); //Drive low before doing SPI transmissions
+	io_write(spi_0_io, &buffer, 1); //Write the constructed 1 byte (does not contain any of the data to be written to the register) packet to the nRF24 over SPI
+	io_write(spi_0_io, data, length); //Write all of the data to be written to the register to the nRF24 over SPI
+	gpio_set_pin_level(RF24_CSN, true); //Drive back to high after doing SPI transmissions
+}
+
+/* This function takes in a byte indicating which of the nRF24's registers should be read from, and then reads in a single byte from that register and returns it to the function caller */
+uint8_t nRF24_read_from_register(uint8_t registerd){
+	/* Initialize a 1 byte buffer to be used to store the data byte read from the register */
+	uint8_t in_byte;
+	/* Initialize a 1 byte buffer to all zeros. Bits 7:5 will be the Read to Register SPI command word (000), and then bits 4:0 will be the 5 bit long register number to read from */
+	uint8_t buffer;
+	buffer = 0;
+	/* Set bits 4:0 to be equal to the 5 bit long register number to write to. If editing this code later, be careful not to use the word register as a variable, as it is a reserved
+	word by another library we use. */
+	buffer = buffer | registerd;
+	gpio_set_pin_level(RF24_CSN, false); //Drive low before doing SPI transmissions
+	io_write(spi_0_io, &buffer, 1); /* Write the constructed 1 byte packet to the nRF24 over SPI. This will tell the nRF24 that the next time we read, we would like it to return the 1 byte
+	of data from the target register */
+	io_read(spi_0_io, &in_byte, 1); /* Read the 1 byte of data into the in_byte buffer */
+	gpio_set_pin_level(RF24_CSN, true); //Drive back to high after doing SPI transmissions
+	/* Return the 1 read byte back to the function caller */
 	return in_byte;
 }
 
-void nRF24_read_from_register_multi_byte(uint8_t registerd, uint8_t *data_pointer, int length){ //SPI Command "R_REGISTER"
+/* This function takes in a byte indicating which of the nRF24's registers should be read from, a pointer to the location where the read data from that register should be stored,
+ and the length (in number of bytes) of the data to be read from the register */
+void nRF24_read_from_register_multi_byte(uint8_t registerd, uint8_t *data_pointer, int length){
+	/* Initialize a 1 byte buffer to all zeros. Bits 7:5 will be the Read to Register SPI command word (000), and then bits 4:0 will be the 5 bit long register number to read from */
 	uint8_t buffer;
 	buffer = 0;
+	/* Set bits 4:0 to be equal to the 5 bit long register number to write to. If editing this code later, be careful not to use the word register as a variable, as it is a reserved
+	word by another library we use. */
 	buffer = buffer | registerd;
-	gpio_set_pin_level(RF24_CSN, false); //drive this low before doing SPI transmissions
-	io_write(spi_0_io, &buffer, 1);
-	io_read(spi_0_io, data_pointer, length);
-	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
+	gpio_set_pin_level(RF24_CSN, false); //Drive low before doing SPI transmissions
+	io_write(spi_0_io, &buffer, 1); /* Write the constructed 1 byte packet to the nRF24 over SPI. This will tell the nRF24 that the next time we read, we would like it to return the 1 byte
+	of data from the target register */
+	io_read(spi_0_io, data_pointer, length); /* Read the multiple bytes of data into the pointer that was passed in as a parameter */
+	gpio_set_pin_level(RF24_CSN, true); //Drive back to high after doing SPI transmissions
 }
 
+/* This function will send a raw SPI command to the nRF24, without reading or writing to or from a particular register. */
 void nRF24_send_SPI_command(uint8_t command){
-	gpio_set_pin_level(RF24_CSN, false); //drive this low before doing SPI transmissions
-	io_write(spi_0_io, &command, 1);
-	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
+	gpio_set_pin_level(RF24_CSN, false); //Drive low before doing SPI transmissions
+	io_write(spi_0_io, &command, 1); //Send the 1 byte command that was received as a parameter to the nRF24 over SPI
+	gpio_set_pin_level(RF24_CSN, true); //Drive back to high after doing SPI transmissions
 }
 
-void nRF24_init(){ //You are in standby-1 at the end of this call
+/* This function sets up the nRF24 to be used in accordance to the Noah's Packet Protocol v1.0, enables the interrupt pin, and has the nRF24 enter standby-1 mode when completed */
+void nRF24_init(uint8_t* data_pointer){
+	/* Setup the SPI connection */
 	spi_m_sync_get_io_descriptor(&SPI_0, &spi_0_io);
 	spi_m_sync_enable(&SPI_0);
-	gpio_set_pin_level(RF24_CE, false); //Keeps us set to be ready to enter standby-1
-	nRF24_write_to_register(CONFIG,0); //0000 0000 keep us in power down, disable checksums
+	/* Set the global data pointer to the data pointer that was passed in as a parameter. This needs to be done because a function setup to be used as an interrupt cannot accept parameters */
+	global_data_pointer = data_pointer;
+	/*This should already be set low, but this will make sure we do not accidentally enter TX or RX modes upon turning on the PWR_UP bit */
+	gpio_set_pin_level(RF24_CE, false);
+	nRF24_write_to_register(CONFIG,0); //0000 0000 Keep us in power down mode, IRQ pin assertion set to default, CRC disabled, RX / TX control in RX mode
+	/* Read from the STATUS register, write a 1 in bit 6 to clear the IRQ pin assertion if present */
+	uint8_t status_read = nRF24_read_from_register(STATUS);
+	status_read = status_read | 64;
+	nRF24_write_to_register(STATUS, status_read);
 	nRF24_write_to_register(EN_AA,0); //0000 0000 no auto ACK
 	nRF24_write_to_register(EN_RXADDR,0); //0000 0000 disable all RX pipes
 	nRF24_write_to_register(SETUP_AW,3); //0000 0011 5 byte tx rx address fields
 	nRF24_write_to_register(SETUP_RETR,0); //0000 0000 no auto retransmission
-	nRF24_write_to_register(RF_CH,120); //0011 1111 first bit must be 0, 011 1111 = 63 freq = 2400 + 63 = 2463 = 2.463 GHz
-	nRF24_write_to_register(RF_SETUP,6); //0000 0010 1 Mbps and -12 db //SET BACK TO 2
-	uint8_t tx_address[] = {0xEE, 0xDD, 0xCC, 0xBB, 0xAA};
-	nRF24_write_to_register_multi_byte(TX_ADDR, &tx_address[0], 5); //Set TX addr as e7e7e7e7e7
+	nRF24_write_to_register(RF_CH,120); //0111 1000 first bit must be 0, 0111 1000 = 120, freq = 2400 + 120 = 2520 = 2.52 GHz, tested to have low interference in UH
+	nRF24_write_to_register(RF_SETUP,6); //0000 0110 1 Mbps and maximum power output
+	uint8_t tx_address[] = {0xEE, 0xDD, 0xCC, 0xBB, 0xAA}; //Needs to be the same on the other nRF24L01+ device
+	nRF24_write_to_register_multi_byte(TX_ADDR, &tx_address[0], 5);
 	nRF24_write_to_register(CONFIG,2); //0000 0020 enter standby-1, disable checksums
+	ext_irq_register(PB1, nRF24_receive_data); //enable interrupt
 }
 
 void nRF24_transmit(uint8_t *data){ //You should be in standby-1 at the beginning of this call
@@ -111,15 +149,23 @@ void nRF24_enter_receive(){ //You are in receive at the end of this call
 	gpio_set_pin_level(RF24_CE, true);
 }
 
-void nRF24_receive_data(uint8_t *data_pointer){
+void nRF24_receive_data(){
 	uint8_t cmd = R_RX_PAYLOAD;
 	gpio_set_pin_level(RF24_CSN, false); //drive this low before doing SPI transmissions
 	io_write(spi_0_io, &cmd, 1);
-	io_read(spi_0_io, data_pointer, 32);
+	io_read(spi_0_io, global_data_pointer, 32);
 	gpio_set_pin_level(RF24_CSN, true); //return to high after SPI transmissions
 	delay_us(11); //Make sure we had enough time to grab the data before flushing
 	cmd = FLUSH_RX;
 	nRF24_send_SPI_command(cmd);
+	uint8_t status_read = nRF24_read_from_register(STATUS);
+	status_read = status_read | 64;
+	nRF24_write_to_register(STATUS, status_read);
+	//uint8_t charray[64];
+	for(int x = 0; x < 32; x++){
+		printf("%02x ", global_data_pointer[x]);
+	}
+	printf("\r\n");
 }
 
 void enter_standby(){
