@@ -5,9 +5,9 @@ At some point a brief description of the repo will go here
 
 ## Other Pieces of the WPI RoboCup SSL MQP
 
-- [WPI RoboCup SSL MQP Robot PCB](https://github.com/RoboJackets/robocup-firmware)
-- [WPI RoboCup SSL MQP Simulator](https://github.com/RoboJackets/robocup-firmware)
-- [WPI RoboCup SSL MQP Master Controller](https://github.com/RoboJackets/robocup-firmware)
+- [WPI RoboCup SSL MQP Robot PCB](https://github.com/ThreeMuskets12/SoccerRobotPCB)
+- [WPI RoboCup SSL MQP Simulator](TODO)
+- [WPI RoboCup SSL MQP Master Controller](TODO)
 
 ## Acknowledgements
 
