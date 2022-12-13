@@ -11,7 +11,7 @@ At some point a brief description of the repo will go here
 
 ## Authors
 
-- [@ThreeMuskets](https://github.com/ThreeMuskets12)
+- [@ThreeMuskets12](https://github.com/ThreeMuskets12)
 - [@evanjvad](https://github.com/evanjvad)
 
 
