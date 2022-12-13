@@ -22,4 +22,4 @@ At some point a brief description of the repo will go here
 
 
 
-![License](https://img.shields.io/github/license/ThreeMuskets12/SoccerRobot)
+![License](https://img.shields.io/github/license/ThreeMuskets12/SoccerRobotFirmware)
