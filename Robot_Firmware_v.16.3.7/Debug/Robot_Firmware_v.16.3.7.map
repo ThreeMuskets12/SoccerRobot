@@ -12175,7 +12175,7 @@ Discarded input sections
  .debug_macro   0x00000000       0xd7 PWM_driver.o
  .debug_macro   0x00000000       0x16 PWM_driver.o
  .debug_macro   0x00000000      0x18b PWM_driver.o
- .debug_macro   0x00000000       0x22 PWM_driver.o
+ .debug_macro   0x00000000       0x28 PWM_driver.o
  .group         0x00000000        0x8 stdio_redirect/gcc/read.o
  .group         0x00000000        0x8 stdio_redirect/gcc/read.o
  .group         0x00000000        0x8 stdio_redirect/gcc/read.o
@@ -14772,7 +14772,7 @@ OUTPUT(Robot_Firmware_v.16.3.7.elf elf32-littlearm)
  .debug_ranges  0x00000cb8       0x28 stdio_redirect/stdio_io.o
  .debug_ranges  0x00000ce0       0x18 stdio_start.o
 
-.debug_macro    0x00000000    0x3b545
+.debug_macro    0x00000000    0x3b54b
  .debug_macro   0x00000000      0x8c8 atmel_start.o
  .debug_macro   0x000008c8      0x8b0 atmel_start.o
  .debug_macro   0x00001178      0x16d atmel_start.o
@@ -14994,13 +14994,13 @@ OUTPUT(Robot_Firmware_v.16.3.7.elf elf32-littlearm)
  .debug_macro   0x0003832a       0x3a hpl/wdt/hpl_wdt.o
  .debug_macro   0x00038364      0x959 main.o
  .debug_macro   0x00038cbd       0xd0 main.o
- .debug_macro   0x00038d8d       0x22 main.o
- .debug_macro   0x00038daf      0x8d7 PWM_driver.o
- .debug_macro   0x00039686      0x70c stdio_redirect/gcc/read.o
- .debug_macro   0x00039d92      0x70c stdio_redirect/gcc/write.o
- .debug_macro   0x0003a49e      0x705 stdio_redirect/stdio_io.o
- .debug_macro   0x0003aba3       0xd9 stdio_redirect/stdio_io.o
- .debug_macro   0x0003ac7c      0x8c9 stdio_start.o
+ .debug_macro   0x00038d8d       0x28 main.o
+ .debug_macro   0x00038db5      0x8d7 PWM_driver.o
+ .debug_macro   0x0003968c      0x70c stdio_redirect/gcc/read.o
+ .debug_macro   0x00039d98      0x70c stdio_redirect/gcc/write.o
+ .debug_macro   0x0003a4a4      0x705 stdio_redirect/stdio_io.o
+ .debug_macro   0x0003aba9       0xd9 stdio_redirect/stdio_io.o
+ .debug_macro   0x0003ac82      0x8c9 stdio_start.o
 
 .debug_line     0x00000000    0x1a154
  .debug_line    0x00000000      0xf15 atmel_start.o
@@ -15035,7 +15035,7 @@ OUTPUT(Robot_Firmware_v.16.3.7.elf elf32-littlearm)
  .debug_line    0x00018563      0xcc8 stdio_redirect/stdio_io.o
  .debug_line    0x0001922b      0xf29 stdio_start.o
 
-.debug_str      0x00000000   0x123cd7
+.debug_str      0x00000000   0x123d03
  .debug_str     0x00000000   0x1070a7 atmel_start.o
                              0x107b37 (size before relaxing)
  .debug_str     0x001070a7      0x700 Device_Startup/startup_sams70n20b.o
@@ -15086,17 +15086,17 @@ OUTPUT(Robot_Firmware_v.16.3.7.elf elf32-littlearm)
                              0x1046c9 (size before relaxing)
  .debug_str     0x001231ed      0x271 hpl/wdt/hpl_wdt.o
                              0x102e20 (size before relaxing)
- .debug_str     0x0012345e      0x76e main.o
-                             0x1085ca (size before relaxing)
- .debug_str     0x00123bcc       0x2d PWM_driver.o
-                             0x107ef7 (size before relaxing)
- .debug_str     0x00123bf9       0x2b stdio_redirect/gcc/read.o
+ .debug_str     0x0012345e      0x79a main.o
+                             0x1085f6 (size before relaxing)
+ .debug_str     0x00123bf8       0x2d PWM_driver.o
+                             0x107f23 (size before relaxing)
+ .debug_str     0x00123c25       0x2b stdio_redirect/gcc/read.o
                              0x106932 (size before relaxing)
- .debug_str     0x00123c24       0x2d stdio_redirect/gcc/write.o
+ .debug_str     0x00123c50       0x2d stdio_redirect/gcc/write.o
                              0x106934 (size before relaxing)
- .debug_str     0x00123c51       0x4b stdio_redirect/stdio_io.o
+ .debug_str     0x00123c7d       0x4b stdio_redirect/stdio_io.o
                              0x1069bb (size before relaxing)
- .debug_str     0x00123c9c       0x3b stdio_start.o
+ .debug_str     0x00123cc8       0x3b stdio_start.o
                              0x107b67 (size before relaxing)
 
 .debug_frame    0x00000000     0x28ac

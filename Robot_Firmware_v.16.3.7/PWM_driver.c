@@ -18,24 +18,24 @@ void set_pwm_channel(struct _pwm_device *const device, uint8_t channel, uint32_t
 
 //motor 0, PA13
 void set_pwm_motor_0(struct _pwm_device *const device, uint32_t duty_cycle){
-	set_pwm_channel(device, CHANNEL_0, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_0, duty_cycle);
 }
 //motor 1, PA17
 void set_pwm_motor_1(struct _pwm_device *const device, uint32_t duty_cycle){
-	set_pwm_channel(device, CHANNEL_1, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_1, duty_cycle);
 }
 //motor 2, PA2
 void set_pwm_motor_2(struct _pwm_device *const device,  uint32_t duty_cycle){
-	set_pwm_channel(device, CHANNEL_2, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_2, duty_cycle);
 }
 //motor 3, PD11
 void set_pwm_motor_3(struct _pwm_device *const device,  uint32_t duty_cycle){
-	set_pwm_channel(device, CHANNEL_3, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_3, duty_cycle);
 }
 
 //motor dribbler PA12
 void set_pwm_dribbler_motor(struct _pwm_device * const device, uint32_t duty_cycle){
-	set_pwm_channel(device, 0, duty_cycle);
+	set_pwm_channel(device, PWM_1_CHANNEL_0, duty_cycle);
 }
 
 void config_PWM(void){

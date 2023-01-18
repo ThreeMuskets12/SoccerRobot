@@ -8,10 +8,11 @@
 #include "atmel_start_pins.h"
 #include <hal_delay.h>
 //PWM channels for either instance (0 or 1)
-#define CHANNEL_0 (2) // Pin PA13
-#define CHANNEL_1 (3) // Pin PA17
-#define CHANNEL_2 (1) // Pin PA2
-#define CHANNEL_3 (0) // Pin PD11
+#define PWM_0_CHANNEL_0 (2) // Pin PA13
+#define PWM_0_CHANNEL_1 (3) // Pin PA17
+#define PWM_0_CHANNEL_2 (1) // Pin PA2
+#define PWM_0_CHANNEL_3 (0) // Pin PD11
+#define PWM_1_CHANNEL_0 (0) // Pin PA12
 
 /* the pwm period for application is 200Hz */
 #define PWM_PERIOD 2928

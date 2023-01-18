@@ -27,13 +27,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_ranges 00000cf8  00000000  00000000  00052c5d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  0003b545  00000000  00000000  00053955  2**0
+ 12 .debug_macro  0003b54b  00000000  00000000  00053955  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   0001a154  00000000  00000000  0008ee9a  2**0
+ 13 .debug_line   0001a154  00000000  00000000  0008eea0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00123cd7  00000000  00000000  000a8fee  2**0
+ 14 .debug_str    00123d03  00000000  00000000  000a8ff4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_frame  000028ac  00000000  00000000  001cccc8  2**2
+ 15 .debug_frame  000028ac  00000000  00000000  001cccf8  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -4843,7 +4843,7 @@ void set_pwm_channel(struct _pwm_device *const device, uint8_t channel, uint32_t
 //motor 0, PA13
 void set_pwm_motor_0(struct _pwm_device *const device, uint32_t duty_cycle){
   401b00:	b508      	push	{r3, lr}
-	set_pwm_channel(device, CHANNEL_0, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_0, duty_cycle);
   401b02:	460a      	mov	r2, r1
   401b04:	2102      	movs	r1, #2
   401b06:	4b01      	ldr	r3, [pc, #4]	; (401b0c <set_pwm_motor_0+0xc>)
@@ -4856,7 +4856,7 @@ void set_pwm_motor_0(struct _pwm_device *const device, uint32_t duty_cycle){
 //motor 1, PA17
 void set_pwm_motor_1(struct _pwm_device *const device, uint32_t duty_cycle){
   401b10:	b508      	push	{r3, lr}
-	set_pwm_channel(device, CHANNEL_1, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_1, duty_cycle);
   401b12:	460a      	mov	r2, r1
   401b14:	2103      	movs	r1, #3
   401b16:	4b01      	ldr	r3, [pc, #4]	; (401b1c <set_pwm_motor_1+0xc>)
@@ -4869,7 +4869,7 @@ void set_pwm_motor_1(struct _pwm_device *const device, uint32_t duty_cycle){
 //motor 2, PA2
 void set_pwm_motor_2(struct _pwm_device *const device,  uint32_t duty_cycle){
   401b20:	b508      	push	{r3, lr}
-	set_pwm_channel(device, CHANNEL_2, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_2, duty_cycle);
   401b22:	460a      	mov	r2, r1
   401b24:	2101      	movs	r1, #1
   401b26:	4b01      	ldr	r3, [pc, #4]	; (401b2c <set_pwm_motor_2+0xc>)
@@ -4882,7 +4882,7 @@ void set_pwm_motor_2(struct _pwm_device *const device,  uint32_t duty_cycle){
 //motor 3, PD11
 void set_pwm_motor_3(struct _pwm_device *const device,  uint32_t duty_cycle){
   401b30:	b508      	push	{r3, lr}
-	set_pwm_channel(device, CHANNEL_3, duty_cycle);
+	set_pwm_channel(device, PWM_0_CHANNEL_3, duty_cycle);
   401b32:	460a      	mov	r2, r1
   401b34:	2100      	movs	r1, #0
   401b36:	4b01      	ldr	r3, [pc, #4]	; (401b3c <set_pwm_motor_3+0xc>)
@@ -4896,7 +4896,7 @@ void set_pwm_motor_3(struct _pwm_device *const device,  uint32_t duty_cycle){
 //motor dribbler PA12
 void set_pwm_dribbler_motor(struct _pwm_device * const device, uint32_t duty_cycle){
   401b40:	b508      	push	{r3, lr}
-	set_pwm_channel(device, 0, duty_cycle);
+	set_pwm_channel(device, PWM_1_CHANNEL_0, duty_cycle);
   401b42:	460a      	mov	r2, r1
   401b44:	2100      	movs	r1, #0
   401b46:	4b01      	ldr	r3, [pc, #4]	; (401b4c <set_pwm_dribbler_motor+0xc>)
