@@ -8,28 +8,14 @@
 #include "BQ76925_driver.h"
 #include "NPP.h"
 #include "motor_controller.h"
-
-static struct timer_task task_0;
-
-int x=0;
-
-static void timer_task_cb(const struct timer_task *const timer_task){
-	x++;
-}
-
-
+#include "timer_driver.h"
 
 int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
 	
-	task_0.interval = 1;
-	task_0.cb = timer_task_cb;
-	task_0.mode = TIMER_TASK_REPEAT;
-	
-	timer_add_task(&TIMER_0, &task_0);
-	timer_start(&TIMER_0);
+	//-----------------IMU 
 	/*Create a float array of length 4 to hold the real, i, j, and k quaternion coefficients that get_IMU_quaternion() returns
 	and then initialize it to zero */
 	
@@ -39,7 +25,9 @@ int main(void)
 	/*Initialize the IMU, making sure to pass in the address of the start of the float array that will hold the quaternion coefficients*/
 	
 	//init_IMU(&imu_vector_buffer[0]);
+	//----------------END IMU
 	
+	//---------------NPP
 	uint8_t robot_ID;
 	NPP_init(&robot_ID);
 	
@@ -47,12 +35,17 @@ int main(void)
 	gpio_set_pin_level(LED1, robot_ID & 0b0010);
 	gpio_set_pin_level(LED2, robot_ID & 0b0100);
 	gpio_set_pin_level(LED3, robot_ID & 0b1000);
+	//------------------END NPP
 	
+	//------------------nRF24
 	uint8_t data_store[32];
 	memset(&data_store[0], 0, sizeof(uint8_t)*32);
 	nRF24_init(data_store);
 	delay_us(500); //Should be 200 us, setting higher for testing
 	nRF24_enter_receive();
+	//------------------END nRF24
+	
+	//------------------PWM
 	pwm_enable(&PWM_0);
 	pwm_enable(&PWM_1);
 	/*
@@ -62,6 +55,8 @@ int main(void)
 	set_pwm_motor_3(&(PWM_0.device), 878);
 	set_pwm_dribbler_motor(&(PWM_1.device), 878);
 	*/
+	//----------------END PWM
+	
 	adc_sync_enable_channel(&ADC_0, 0);
     uint8_t buff[2];
     //second param = channel 
@@ -85,8 +80,15 @@ int main(void)
 	//setup_BQ7_for_adc(buffer, CELL_2);
 	//setup_BQ7_for_adc(buffer, CELL_3);
 	
+	
+		
+		
 		
 	while (1) {
+		//wheel and dribbler time
+		if(time_to_pid){
+			wheelMotorPID();
+		}
 		/*
 		gpio_set_pin_level(LED0, gpio_get_pin_level(DipSwitch0));
 		gpio_set_pin_level(LED1, gpio_get_pin_level(DipSwitch1));
@@ -144,8 +146,5 @@ int main(void)
 		//set_ref_voltage(buffer, 1);
 	
 	}
-	if(x == 1000){
-		gpio_toggle_pin_level(LED0);
-		x=0;
-	}
+	
 }

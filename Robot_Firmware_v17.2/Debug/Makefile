@@ -101,7 +101,8 @@ C_SRCS +=  \
 ../motor_controller.c \
 ../NPP.c \
 ../nRF24_driver.c \
-../PWM_driver.c
+../PWM_driver.c \
+../timer_driver.c
 
 
 PREPROCESSING_SRCS += 
@@ -152,7 +153,8 @@ main.o \
 motor_controller.o \
 NPP.o \
 nRF24_driver.o \
-PWM_driver.o
+PWM_driver.o \
+timer_driver.o
 
 OBJS_AS_ARGS +=  \
 atmel_start.o \
@@ -196,7 +198,8 @@ main.o \
 motor_controller.o \
 NPP.o \
 nRF24_driver.o \
-PWM_driver.o
+PWM_driver.o \
+timer_driver.o
 
 C_DEPS +=  \
 atmel_start.d \
@@ -240,7 +243,8 @@ main.d \
 motor_controller.d \
 NPP.d \
 nRF24_driver.d \
-PWM_driver.d
+PWM_driver.d \
+timer_driver.d
 
 C_DEPS_AS_ARGS +=  \
 atmel_start.d \
@@ -284,7 +288,8 @@ main.d \
 motor_controller.d \
 NPP.d \
 nRF24_driver.d \
-PWM_driver.d
+PWM_driver.d \
+timer_driver.d
 
 OUTPUT_FILE_PATH +=Robot_Firmware_v17.2.elf
 
@@ -590,6 +595,13 @@ hpl/xdmac/hpl_xdmac.o: ../hpl/xdmac/hpl_xdmac.c
 	
 
 ./PWM_driver.o: .././PWM_driver.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMS70N20B__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../Config" -I".." -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/afec" -I"../hpl/core" -I"../hpl/pio" -I"../hpl/pmc" -I"../hpl/pwm" -I"../hpl/spi" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/twihs" -I"../hpl/wdt" -I"../hpl/xdmac" -I"../hri" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.4.134\sams70b\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m7 -c -std=gnu99 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./timer_driver.o: .././timer_driver.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMS70N20B__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../Config" -I".." -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/afec" -I"../hpl/core" -I"../hpl/pio" -I"../hpl/pmc" -I"../hpl/pwm" -I"../hpl/spi" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/twihs" -I"../hpl/wdt" -I"../hpl/xdmac" -I"../hri" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.4.134\sams70b\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m7 -c -std=gnu99 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

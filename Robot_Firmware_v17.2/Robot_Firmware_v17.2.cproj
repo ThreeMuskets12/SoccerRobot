@@ -898,6 +898,12 @@
     <Compile Include="PWM_driver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="timer_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />

@@ -5300,10 +5300,14 @@ Discarded input sections
  .bss           0x00000000        0x0 hal/src/hal_timer.o
  .text.timer_deinit
                 0x00000000       0x28 hal/src/hal_timer.o
+ .text.timer_start
+                0x00000000       0x3c hal/src/hal_timer.o
  .text.timer_stop
                 0x00000000       0x3c hal/src/hal_timer.o
  .text.timer_set_clock_cycles_per_tick
                 0x00000000       0x2c hal/src/hal_timer.o
+ .text.timer_add_task
+                0x00000000       0xa8 hal/src/hal_timer.o
  .text.timer_remove_task
                 0x00000000       0xa0 hal/src/hal_timer.o
  .text.timer_get_clock_cycles_in_tick
@@ -7205,6 +7209,8 @@ Discarded input sections
                 0x00000000        0xc hpl/core/hpl_core_m7_base.o
  .text._irq_disable
                 0x00000000       0x28 hpl/core/hpl_core_m7_base.o
+ .text._irq_set
+                0x00000000       0x20 hpl/core/hpl_core_m7_base.o
  .text._irq_clear
                 0x00000000       0x20 hpl/core/hpl_core_m7_base.o
  .text._irq_enable
@@ -9606,12 +9612,18 @@ Discarded input sections
  .text          0x00000000        0x0 hpl/tc/hpl_tc.o
  .text._timer_deinit
                 0x00000000       0x40 hpl/tc/hpl_tc.o
+ .text._timer_start
+                0x00000000        0x8 hpl/tc/hpl_tc.o
  .text._timer_stop
                 0x00000000        0x8 hpl/tc/hpl_tc.o
  .text._timer_set_period
                 0x00000000        0x6 hpl/tc/hpl_tc.o
  .text._timer_get_period
                 0x00000000        0x6 hpl/tc/hpl_tc.o
+ .text._timer_is_started
+                0x00000000        0xa hpl/tc/hpl_tc.o
+ .text._timer_set_irq
+                0x00000000       0x18 hpl/tc/hpl_tc.o
  .text._tc_get_pwm
                 0x00000000        0x4 hpl/tc/hpl_tc.o
  .debug_macro   0x00000000      0x8b0 hpl/tc/hpl_tc.o
@@ -10803,6 +10815,7 @@ Discarded input sections
  .group         0x00000000        0x8 main.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
+ .bss           0x00000000        0x0 main.o
  .debug_macro   0x00000000      0x8b0 main.o
  .debug_macro   0x00000000      0x16d main.o
  .debug_macro   0x00000000       0x22 main.o
@@ -12312,6 +12325,308 @@ Discarded input sections
  .debug_frame   0x00000000       0xb0 PWM_driver.o
  .ARM.attributes
                 0x00000000       0x37 PWM_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .group         0x00000000        0x8 timer_driver.o
+ .text          0x00000000        0x0 timer_driver.o
+ .data          0x00000000        0x0 timer_driver.o
+ .bss           0x00000000       0x18 timer_driver.o
+ .text.timer_task_cb
+                0x00000000       0x14 timer_driver.o
+ .text.initialize_task
+                0x00000000       0x34 timer_driver.o
+ .debug_info    0x00000000      0x73e timer_driver.o
+ .debug_abbrev  0x00000000      0x16d timer_driver.o
+ .debug_loc     0x00000000       0x20 timer_driver.o
+ .debug_aranges
+                0x00000000       0x28 timer_driver.o
+ .debug_ranges  0x00000000       0x18 timer_driver.o
+ .debug_macro   0x00000000      0x73e timer_driver.o
+ .debug_macro   0x00000000      0x8b0 timer_driver.o
+ .debug_macro   0x00000000      0x16d timer_driver.o
+ .debug_macro   0x00000000       0x22 timer_driver.o
+ .debug_macro   0x00000000       0x87 timer_driver.o
+ .debug_macro   0x00000000       0x51 timer_driver.o
+ .debug_macro   0x00000000       0xef timer_driver.o
+ .debug_macro   0x00000000       0x6a timer_driver.o
+ .debug_macro   0x00000000      0x1df timer_driver.o
+ .debug_macro   0x00000000       0x22 timer_driver.o
+ .debug_macro   0x00000000       0xd7 timer_driver.o
+ .debug_macro   0x00000000       0x1c timer_driver.o
+ .debug_macro   0x00000000       0x22 timer_driver.o
+ .debug_macro   0x00000000       0xdf timer_driver.o
+ .debug_macro   0x00000000     0x12cd timer_driver.o
+ .debug_macro   0x00000000      0x11f timer_driver.o
+ .debug_macro   0x00000000       0x19 timer_driver.o
+ .debug_macro   0x00000000      0x3e2 timer_driver.o
+ .debug_macro   0x00000000      0x5a9 timer_driver.o
+ .debug_macro   0x00000000     0x1797 timer_driver.o
+ .debug_macro   0x00000000      0x3bb timer_driver.o
+ .debug_macro   0x00000000      0x830 timer_driver.o
+ .debug_macro   0x00000000      0x316 timer_driver.o
+ .debug_macro   0x00000000       0x40 timer_driver.o
+ .debug_macro   0x00000000     0x105e timer_driver.o
+ .debug_macro   0x00000000      0x60b timer_driver.o
+ .debug_macro   0x00000000      0x555 timer_driver.o
+ .debug_macro   0x00000000      0xb8f timer_driver.o
+ .debug_macro   0x00000000      0x542 timer_driver.o
+ .debug_macro   0x00000000     0x83ff timer_driver.o
+ .debug_macro   0x00000000     0x3022 timer_driver.o
+ .debug_macro   0x00000000     0x24d0 timer_driver.o
+ .debug_macro   0x00000000      0x87f timer_driver.o
+ .debug_macro   0x00000000      0x17d timer_driver.o
+ .debug_macro   0x00000000      0x118 timer_driver.o
+ .debug_macro   0x00000000      0x909 timer_driver.o
+ .debug_macro   0x00000000      0x125 timer_driver.o
+ .debug_macro   0x00000000      0x709 timer_driver.o
+ .debug_macro   0x00000000      0xb64 timer_driver.o
+ .debug_macro   0x00000000      0xf03 timer_driver.o
+ .debug_macro   0x00000000      0xff2 timer_driver.o
+ .debug_macro   0x00000000      0x172 timer_driver.o
+ .debug_macro   0x00000000      0x124 timer_driver.o
+ .debug_macro   0x00000000      0xbc2 timer_driver.o
+ .debug_macro   0x00000000      0x5c5 timer_driver.o
+ .debug_macro   0x00000000     0x1afb timer_driver.o
+ .debug_macro   0x00000000      0x625 timer_driver.o
+ .debug_macro   0x00000000     0x41a7 timer_driver.o
+ .debug_macro   0x00000000      0x4f1 timer_driver.o
+ .debug_macro   0x00000000       0xc4 timer_driver.o
+ .debug_macro   0x00000000      0x12d timer_driver.o
+ .debug_macro   0x00000000     0x2a5f timer_driver.o
+ .debug_macro   0x00000000       0x7c timer_driver.o
+ .debug_macro   0x00000000      0x14e timer_driver.o
+ .debug_macro   0x00000000       0xf4 timer_driver.o
+ .debug_macro   0x00000000       0xf4 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x7c timer_driver.o
+ .debug_macro   0x00000000       0x40 timer_driver.o
+ .debug_macro   0x00000000       0x40 timer_driver.o
+ .debug_macro   0x00000000      0x7ce timer_driver.o
+ .debug_macro   0x00000000       0x6a timer_driver.o
+ .debug_macro   0x00000000       0x88 timer_driver.o
+ .debug_macro   0x00000000       0xac timer_driver.o
+ .debug_macro   0x00000000      0x13a timer_driver.o
+ .debug_macro   0x00000000      0x187 timer_driver.o
+ .debug_macro   0x00000000      0x180 timer_driver.o
+ .debug_macro   0x00000000      0x180 timer_driver.o
+ .debug_macro   0x00000000      0x121 timer_driver.o
+ .debug_macro   0x00000000      0x352 timer_driver.o
+ .debug_macro   0x00000000      0x352 timer_driver.o
+ .debug_macro   0x00000000       0x82 timer_driver.o
+ .debug_macro   0x00000000       0x22 timer_driver.o
+ .debug_macro   0x00000000       0x22 timer_driver.o
+ .debug_macro   0x00000000       0x58 timer_driver.o
+ .debug_macro   0x00000000       0x28 timer_driver.o
+ .debug_macro   0x00000000       0x7c timer_driver.o
+ .debug_macro   0x00000000       0x8e timer_driver.o
+ .debug_macro   0x00000000       0x34 timer_driver.o
+ .debug_macro   0x00000000      0x1a8 timer_driver.o
+ .debug_macro   0x00000000      0x1a8 timer_driver.o
+ .debug_macro   0x00000000      0x1a8 timer_driver.o
+ .debug_macro   0x00000000      0x1a8 timer_driver.o
+ .debug_macro   0x00000000       0x3a timer_driver.o
+ .debug_macro   0x00000000       0x82 timer_driver.o
+ .debug_macro   0x00000000       0x82 timer_driver.o
+ .debug_macro   0x00000000       0x82 timer_driver.o
+ .debug_macro   0x00000000       0x70 timer_driver.o
+ .debug_macro   0x00000000       0x70 timer_driver.o
+ .debug_macro   0x00000000       0x70 timer_driver.o
+ .debug_macro   0x00000000       0x70 timer_driver.o
+ .debug_macro   0x00000000       0x70 timer_driver.o
+ .debug_macro   0x00000000       0xf4 timer_driver.o
+ .debug_macro   0x00000000       0xf4 timer_driver.o
+ .debug_macro   0x00000000       0xf4 timer_driver.o
+ .debug_macro   0x00000000      0x71f timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x22 timer_driver.o
+ .debug_macro   0x00000000      0x9bf timer_driver.o
+ .debug_macro   0x00000000      0x4cd timer_driver.o
+ .debug_macro   0x00000000     0x1749 timer_driver.o
+ .debug_macro   0x00000000      0x123 timer_driver.o
+ .debug_macro   0x00000000       0x10 timer_driver.o
+ .debug_macro   0x00000000       0x10 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000      0x27e timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000      0x373 timer_driver.o
+ .debug_macro   0x00000000       0xa9 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000       0xca timer_driver.o
+ .debug_macro   0x00000000       0x1c timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_macro   0x00000000      0x130 timer_driver.o
+ .debug_macro   0x00000000       0xc9 timer_driver.o
+ .debug_macro   0x00000000       0x70 timer_driver.o
+ .debug_macro   0x00000000       0x16 timer_driver.o
+ .debug_line    0x00000000      0xdbd timer_driver.o
+ .debug_str     0x00000000   0x103e36 timer_driver.o
+ .comment       0x00000000       0x5a timer_driver.o
+ .debug_frame   0x00000000       0x38 timer_driver.o
+ .ARM.attributes
+                0x00000000       0x37 timer_driver.o
  .text          0x00000000      0x370 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m\libgcc.a(_arm_addsubdf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m\libgcc.a(_arm_addsubdf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m\libgcc.a(_arm_addsubdf3.o)
@@ -12720,6 +13035,7 @@ LOAD motor_controller.o
 LOAD NPP.o
 LOAD nRF24_driver.o
 LOAD PWM_driver.o
+LOAD timer_driver.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libm.a
 END GROUP
@@ -12736,7 +13052,7 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
                 0x00000400                STACK_SIZE = DEFINED (STACK_SIZE)?STACK_SIZE:DEFINED (__stack_size__)?__stack_size__:0x400
                 0x00000200                HEAP_SIZE = DEFINED (HEAP_SIZE)?HEAP_SIZE:DEFINED (__heap_size__)?__heap_size__:0x200
 
-.text           0x00400000     0x2440
+.text           0x00400000     0x22d0
                 0x00400000                . = ALIGN (0x4)
                 0x00400000                _sfixed = .
  *(.vectors .vectors.*)
@@ -12950,326 +13266,305 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
  .text.timer_init
                 0x00400d40       0x3c hal/src/hal_timer.o
                 0x00400d40                timer_init
- .text.timer_start
-                0x00400d7c       0x3c hal/src/hal_timer.o
-                0x00400d7c                timer_start
- .text.timer_add_task
-                0x00400db8       0xa8 hal/src/hal_timer.o
-                0x00400db8                timer_add_task
- .text.assert   0x00400e60        0x6 hal/utils/src/utils_assert.o
-                0x00400e60                assert
+ .text.assert   0x00400d7c        0x6 hal/utils/src/utils_assert.o
+                0x00400d7c                assert
  .text.is_list_element
-                0x00400e66       0x14 hal/utils/src/utils_list.o
-                0x00400e66                is_list_element
- *fill*         0x00400e7a        0x2 
+                0x00400d82       0x14 hal/utils/src/utils_list.o
+                0x00400d82                is_list_element
+ *fill*         0x00400d96        0x2 
  .text.list_insert_as_head
-                0x00400e7c       0x2c hal/utils/src/utils_list.o
-                0x00400e7c                list_insert_as_head
+                0x00400d98       0x2c hal/utils/src/utils_list.o
+                0x00400d98                list_insert_as_head
  .text.list_insert_after
-                0x00400ea8        0x8 hal/utils/src/utils_list.o
-                0x00400ea8                list_insert_after
+                0x00400dc4        0x8 hal/utils/src/utils_list.o
+                0x00400dc4                list_insert_after
  .text.list_remove_head
-                0x00400eb0       0x10 hal/utils/src/utils_list.o
-                0x00400eb0                list_remove_head
+                0x00400dcc       0x10 hal/utils/src/utils_list.o
+                0x00400dcc                list_remove_head
  .text._afec_init
-                0x00400ec0       0x7c hpl/afec/hpl_afec.o
+                0x00400ddc       0x7c hpl/afec/hpl_afec.o
  .text._afec_get_hardware_index
-                0x00400f3c       0x34 hpl/afec/hpl_afec.o
+                0x00400e58       0x34 hpl/afec/hpl_afec.o
  .text._afec_get_regs
-                0x00400f70       0x2c hpl/afec/hpl_afec.o
+                0x00400e8c       0x2c hpl/afec/hpl_afec.o
  .text._adc_sync_init
-                0x00400f9c       0x38 hpl/afec/hpl_afec.o
-                0x00400f9c                _adc_sync_init
+                0x00400eb8       0x38 hpl/afec/hpl_afec.o
+                0x00400eb8                _adc_sync_init
  .text._adc_sync_enable_channel
-                0x00400fd4        0xc hpl/afec/hpl_afec.o
-                0x00400fd4                _adc_sync_enable_channel
- .text._irq_set
-                0x00400fe0       0x20 hpl/core/hpl_core_m7_base.o
-                0x00400fe0                _irq_set
+                0x00400ef0        0xc hpl/afec/hpl_afec.o
+                0x00400ef0                _adc_sync_enable_channel
  .text._get_cycles_for_us
-                0x00401000        0xa hpl/core/hpl_core_m7_base.o
-                0x00401000                _get_cycles_for_us
- *fill*         0x0040100a        0x2 
+                0x00400efc        0xa hpl/core/hpl_core_m7_base.o
+                0x00400efc                _get_cycles_for_us
+ *fill*         0x00400f06        0x2 
  .text._init_chip
-                0x0040100c       0x54 hpl/core/hpl_init.o
-                0x0040100c                _init_chip
- .text._ffs     0x00401060       0x30 hpl/pio/hpl_pio_ext.o
+                0x00400f08       0x54 hpl/core/hpl_init.o
+                0x00400f08                _init_chip
+ .text._ffs     0x00400f5c       0x30 hpl/pio/hpl_pio_ext.o
  .text._ext_irq_handler
-                0x00401090       0xb0 hpl/pio/hpl_pio_ext.o
+                0x00400f8c       0xb0 hpl/pio/hpl_pio_ext.o
  .text._pio_get_hardware_index
-                0x00401140       0x28 hpl/pio/hpl_pio_ext.o
+                0x0040103c       0x28 hpl/pio/hpl_pio_ext.o
  .text._pio_get_index
-                0x00401168       0x4c hpl/pio/hpl_pio_ext.o
+                0x00401064       0x4c hpl/pio/hpl_pio_ext.o
  .text._pio_init
-                0x004011b4       0xc8 hpl/pio/hpl_pio_ext.o
+                0x004010b0       0xc8 hpl/pio/hpl_pio_ext.o
  .text.PIOB_Handler
-                0x0040127c        0xc hpl/pio/hpl_pio_ext.o
-                0x0040127c                PIOB_Handler
+                0x00401178        0xc hpl/pio/hpl_pio_ext.o
+                0x00401178                PIOB_Handler
  .text.PIOA_Handler
-                0x00401288        0xc hpl/pio/hpl_pio_ext.o
-                0x00401288                PIOA_Handler
+                0x00401184        0xc hpl/pio/hpl_pio_ext.o
+                0x00401184                PIOA_Handler
  .text._ext_irq_init
-                0x00401294       0x28 hpl/pio/hpl_pio_ext.o
-                0x00401294                _ext_irq_init
+                0x00401190       0x28 hpl/pio/hpl_pio_ext.o
+                0x00401190                _ext_irq_init
  .text._ext_irq_enable
-                0x004012bc       0x60 hpl/pio/hpl_pio_ext.o
-                0x004012bc                _ext_irq_enable
+                0x004011b8       0x60 hpl/pio/hpl_pio_ext.o
+                0x004011b8                _ext_irq_enable
  .text._pmc_init_sources
-                0x0040131c       0x68 hpl/pmc/hpl_pmc.o
+                0x00401218       0x68 hpl/pmc/hpl_pmc.o
  .text._pmc_init_master_clock
-                0x00401384       0x4c hpl/pmc/hpl_pmc.o
+                0x00401280       0x4c hpl/pmc/hpl_pmc.o
  .text._pmc_init
-                0x004013d0       0x14 hpl/pmc/hpl_pmc.o
-                0x004013d0                _pmc_init
+                0x004012cc       0x14 hpl/pmc/hpl_pmc.o
+                0x004012cc                _pmc_init
  .text._pwm_get_cfg
-                0x004013e4       0x30 hpl/pwm/hpl_pwm.o
+                0x004012e0       0x30 hpl/pwm/hpl_pwm.o
  .text._pwm_init_irq_param
-                0x00401414       0x28 hpl/pwm/hpl_pwm.o
+                0x00401310       0x28 hpl/pwm/hpl_pwm.o
  .text._pwm_interrupt_handler
-                0x0040143c       0x10 hpl/pwm/hpl_pwm.o
+                0x00401338       0x10 hpl/pwm/hpl_pwm.o
  .text.PWM0_Handler
-                0x0040144c       0x14 hpl/pwm/hpl_pwm.o
-                0x0040144c                PWM0_Handler
+                0x00401348       0x14 hpl/pwm/hpl_pwm.o
+                0x00401348                PWM0_Handler
  .text.PWM1_Handler
-                0x00401460       0x14 hpl/pwm/hpl_pwm.o
-                0x00401460                PWM1_Handler
+                0x0040135c       0x14 hpl/pwm/hpl_pwm.o
+                0x0040135c                PWM1_Handler
  .text._pwm_init
-                0x00401474      0x138 hpl/pwm/hpl_pwm.o
-                0x00401474                _pwm_init
+                0x00401370      0x138 hpl/pwm/hpl_pwm.o
+                0x00401370                _pwm_init
  .text._pwm_enable
-                0x004015ac       0x44 hpl/pwm/hpl_pwm.o
-                0x004015ac                _pwm_enable
+                0x004014a8       0x44 hpl/pwm/hpl_pwm.o
+                0x004014a8                _pwm_enable
  .text._pwm_is_enabled
-                0x004015f0       0x30 hpl/pwm/hpl_pwm.o
-                0x004015f0                _pwm_is_enabled
+                0x004014ec       0x30 hpl/pwm/hpl_pwm.o
+                0x004014ec                _pwm_is_enabled
  .text._pwm_get_pwm
-                0x00401620        0x4 hpl/pwm/hpl_pwm.o
-                0x00401620                _pwm_get_pwm
+                0x0040151c        0x4 hpl/pwm/hpl_pwm.o
+                0x0040151c                _pwm_get_pwm
  .text._spi_sync_enable
-                0x00401624        0x8 hpl/spi/hpl_spi.o
+                0x00401520        0x8 hpl/spi/hpl_spi.o
  .text._spi_get_hardware_index
-                0x0040162c       0x18 hpl/spi/hpl_spi.o
+                0x00401528       0x18 hpl/spi/hpl_spi.o
  .text._spi_m_sync_init
-                0x00401644       0xa8 hpl/spi/hpl_spi.o
-                0x00401644                _spi_m_sync_init
+                0x00401540       0xa8 hpl/spi/hpl_spi.o
+                0x00401540                _spi_m_sync_init
  .text._spi_m_sync_enable
-                0x004016ec       0x34 hpl/spi/hpl_spi.o
-                0x004016ec                _spi_m_sync_enable
+                0x004015e8       0x34 hpl/spi/hpl_spi.o
+                0x004015e8                _spi_m_sync_enable
  .text._spi_m_sync_trans
-                0x00401720      0x100 hpl/spi/hpl_spi.o
-                0x00401720                _spi_m_sync_trans
+                0x0040161c      0x100 hpl/spi/hpl_spi.o
+                0x0040161c                _spi_m_sync_trans
  .text._spi_get_spi_m_sync
-                0x00401820        0x4 hpl/spi/hpl_spi.o
-                0x00401820                _spi_get_spi_m_sync
+                0x0040171c        0x4 hpl/spi/hpl_spi.o
+                0x0040171c                _spi_get_spi_m_sync
  .text._system_time_init
-                0x00401824       0x14 hpl/systick/hpl_systick_ARMv7_base.o
-                0x00401824                _system_time_init
+                0x00401720       0x14 hpl/systick/hpl_systick_ARMv7_base.o
+                0x00401720                _system_time_init
  .text._delay_init
-                0x00401838        0xc hpl/systick/hpl_systick_ARMv7_base.o
-                0x00401838                _delay_init
+                0x00401734        0xc hpl/systick/hpl_systick_ARMv7_base.o
+                0x00401734                _delay_init
  .text._delay_cycles
-                0x00401844       0x40 hpl/systick/hpl_systick_ARMv7_base.o
-                0x00401844                _delay_cycles
- .text.get_cfg  0x00401884       0x38 hpl/tc/hpl_tc.o
+                0x00401740       0x40 hpl/systick/hpl_systick_ARMv7_base.o
+                0x00401740                _delay_cycles
+ .text.get_cfg  0x00401780       0x38 hpl/tc/hpl_tc.o
  .text._tc_init_irq_param
-                0x004018bc       0x18 hpl/tc/hpl_tc.o
+                0x004017b8       0x18 hpl/tc/hpl_tc.o
  .text.tc_interrupt_handler
-                0x004018d4       0x14 hpl/tc/hpl_tc.o
+                0x004017d0       0x14 hpl/tc/hpl_tc.o
  .text._timer_init
-                0x004018e8       0xbc hpl/tc/hpl_tc.o
-                0x004018e8                _timer_init
- .text._timer_start
-                0x004019a4        0x8 hpl/tc/hpl_tc.o
-                0x004019a4                _timer_start
- .text._timer_is_started
-                0x004019ac        0xa hpl/tc/hpl_tc.o
-                0x004019ac                _timer_is_started
- *fill*         0x004019b6        0x2 
- .text._timer_set_irq
-                0x004019b8       0x18 hpl/tc/hpl_tc.o
-                0x004019b8                _timer_set_irq
+                0x004017e4       0xbc hpl/tc/hpl_tc.o
+                0x004017e4                _timer_init
  .text._tc_get_timer
-                0x004019d0        0x4 hpl/tc/hpl_tc.o
-                0x004019d0                _tc_get_timer
+                0x004018a0        0x4 hpl/tc/hpl_tc.o
+                0x004018a0                _tc_get_timer
  .text.TC0_Handler
-                0x004019d4       0x14 hpl/tc/hpl_tc.o
-                0x004019d4                TC0_Handler
+                0x004018a4       0x14 hpl/tc/hpl_tc.o
+                0x004018a4                TC0_Handler
  .text._get_i2cm_sync_cfg
-                0x004019e8       0x38 hpl/twihs/hpl_twihs.o
+                0x004018b8       0x38 hpl/twihs/hpl_twihs.o
  .text._i2c_m_sync_init
-                0x00401a20       0x48 hpl/twihs/hpl_twihs.o
-                0x00401a20                _i2c_m_sync_init
+                0x004018f0       0x48 hpl/twihs/hpl_twihs.o
+                0x004018f0                _i2c_m_sync_init
  .text._i2c_m_sync_transfer
-                0x00401a68      0x168 hpl/twihs/hpl_twihs.o
-                0x00401a68                _i2c_m_sync_transfer
+                0x00401938      0x168 hpl/twihs/hpl_twihs.o
+                0x00401938                _i2c_m_sync_transfer
  .text._wdt_init
-                0x00401bd0       0x34 hpl/wdt/hpl_wdt.o
-                0x00401bd0                _wdt_init
- .text.timer_task_cb
-                0x00401c04       0x10 main.o
- .text.main     0x00401c14      0x13c main.o
-                0x00401c14                main
+                0x00401aa0       0x34 hpl/wdt/hpl_wdt.o
+                0x00401aa0                _wdt_init
+ .text.main     0x00401ad4      0x10c main.o
+                0x00401ad4                main
  .text.NPP_init
-                0x00401d50       0x30 NPP.o
-                0x00401d50                NPP_init
+                0x00401be0       0x30 NPP.o
+                0x00401be0                NPP_init
  .text.two_byte_to_float
-                0x00401d80       0x28 NPP.o
-                0x00401d80                two_byte_to_float
+                0x00401c10       0x28 NPP.o
+                0x00401c10                two_byte_to_float
  .text.NPP_process
-                0x00401da8       0x6c NPP.o
-                0x00401da8                NPP_process
+                0x00401c38       0x6c NPP.o
+                0x00401c38                NPP_process
  .text.nRF24_write_to_register
-                0x00401e14       0x34 nRF24_driver.o
-                0x00401e14                nRF24_write_to_register
+                0x00401ca4       0x34 nRF24_driver.o
+                0x00401ca4                nRF24_write_to_register
  .text.nRF24_write_to_register_multi_byte
-                0x00401e48       0x44 nRF24_driver.o
-                0x00401e48                nRF24_write_to_register_multi_byte
+                0x00401cd8       0x44 nRF24_driver.o
+                0x00401cd8                nRF24_write_to_register_multi_byte
  .text.nRF24_read_from_register
-                0x00401e8c       0x40 nRF24_driver.o
-                0x00401e8c                nRF24_read_from_register
+                0x00401d1c       0x40 nRF24_driver.o
+                0x00401d1c                nRF24_read_from_register
  .text.nRF24_send_SPI_command
-                0x00401ecc       0x2c nRF24_driver.o
-                0x00401ecc                nRF24_send_SPI_command
+                0x00401d5c       0x2c nRF24_driver.o
+                0x00401d5c                nRF24_send_SPI_command
  .text.nRF24_receive_data
-                0x00401ef8       0x80 nRF24_driver.o
-                0x00401ef8                nRF24_receive_data
+                0x00401d88       0x80 nRF24_driver.o
+                0x00401d88                nRF24_receive_data
  .text.nRF24_init
-                0x00401f78       0xb4 nRF24_driver.o
-                0x00401f78                nRF24_init
+                0x00401e08       0xb4 nRF24_driver.o
+                0x00401e08                nRF24_init
  .text.nRF_24_is_data_available
-                0x0040202c       0x28 nRF24_driver.o
-                0x0040202c                nRF_24_is_data_available
+                0x00401ebc       0x28 nRF24_driver.o
+                0x00401ebc                nRF_24_is_data_available
  .text.nRF24_enter_receive
-                0x00402054       0x58 nRF24_driver.o
-                0x00402054                nRF24_enter_receive
+                0x00401ee4       0x58 nRF24_driver.o
+                0x00401ee4                nRF24_enter_receive
  .text.__libc_init_array
-                0x004020ac       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-init.o)
-                0x004020ac                __libc_init_array
- .text.memset   0x004020f4       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-memset.o)
-                0x004020f4                memset
+                0x00401f3c       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-init.o)
+                0x00401f3c                __libc_init_array
+ .text.memset   0x00401f84       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-memset.o)
+                0x00401f84                memset
  *(.glue_7t)
- .glue_7t       0x00402104        0x0 linker stubs
+ .glue_7t       0x00401f94        0x0 linker stubs
  *(.glue_7)
- .glue_7        0x00402104        0x0 linker stubs
+ .glue_7        0x00401f94        0x0 linker stubs
  *(.rodata .rodata* .gnu.linkonce.r.*)
  .rodata.str1.4
-                0x00402104       0x19 driver_init.o
- *fill*         0x0040211d        0x3 
+                0x00401f94       0x19 driver_init.o
+ *fill*         0x00401fad        0x3 
  .rodata.str1.4
-                0x00402120       0x1a hal/src/hal_adc_sync.o
- *fill*         0x0040213a        0x2 
+                0x00401fb0       0x1a hal/src/hal_adc_sync.o
+ *fill*         0x00401fca        0x2 
  .rodata.str1.4
-                0x0040213c       0x1c hal/src/hal_i2c_m_sync.o
+                0x00401fcc       0x1c hal/src/hal_i2c_m_sync.o
  .rodata.str1.4
-                0x00402158       0x14 hal/src/hal_io.o
+                0x00401fe8       0x14 hal/src/hal_io.o
  .rodata.str1.4
-                0x0040216c       0x15 hal/src/hal_pwm.o
- *fill*         0x00402181        0x3 
+                0x00401ffc       0x15 hal/src/hal_pwm.o
+ *fill*         0x00402011        0x3 
  .rodata.str1.4
-                0x00402184       0x1c hal/src/hal_spi_m_sync.o
+                0x00402014       0x1c hal/src/hal_spi_m_sync.o
  .rodata.str1.4
-                0x004021a0       0x17 hal/src/hal_timer.o
- *fill*         0x004021b7        0x1 
+                0x00402030       0x17 hal/src/hal_timer.o
+ *fill*         0x00402047        0x1 
  .rodata.str1.4
-                0x004021b8       0x1e hal/utils/src/utils_list.o
- *fill*         0x004021d6        0x2 
- .rodata        0x004021d8       0x64 hpl/afec/hpl_afec.o
+                0x00402048       0x1e hal/utils/src/utils_list.o
+ *fill*         0x00402066        0x2 
+ .rodata        0x00402068       0x64 hpl/afec/hpl_afec.o
  .rodata.str1.4
-                0x0040223c       0x17 hpl/afec/hpl_afec.o
- *fill*         0x00402253        0x1 
- .rodata        0x00402254       0x3b hpl/pio/hpl_pio_ext.o
- *fill*         0x0040228f        0x1 
+                0x004020cc       0x17 hpl/afec/hpl_afec.o
+ *fill*         0x004020e3        0x1 
+ .rodata        0x004020e4       0x3b hpl/pio/hpl_pio_ext.o
+ *fill*         0x0040211f        0x1 
  .rodata.str1.4
-                0x00402290       0x19 hpl/pio/hpl_pio_ext.o
- *fill*         0x004022a9        0x3 
- .rodata        0x004022ac       0xc8 hpl/pwm/hpl_pwm.o
+                0x00402120       0x19 hpl/pio/hpl_pio_ext.o
+ *fill*         0x00402139        0x3 
+ .rodata        0x0040213c       0xc8 hpl/pwm/hpl_pwm.o
  .rodata.str1.4
-                0x00402374       0x15 hpl/pwm/hpl_pwm.o
- *fill*         0x00402389        0x3 
- .rodata        0x0040238c       0x14 hpl/spi/hpl_spi.o
+                0x00402204       0x15 hpl/pwm/hpl_pwm.o
+ *fill*         0x00402219        0x3 
+ .rodata        0x0040221c       0x14 hpl/spi/hpl_spi.o
  .rodata.str1.4
-                0x004023a0       0x15 hpl/spi/hpl_spi.o
- *fill*         0x004023b5        0x3 
+                0x00402230       0x15 hpl/spi/hpl_spi.o
+ *fill*         0x00402245        0x3 
  .rodata.str1.4
-                0x004023b8       0x13 hpl/tc/hpl_tc.o
- *fill*         0x004023cb        0x1 
- .rodata        0x004023cc       0x18 hpl/twihs/hpl_twihs.o
+                0x00402248       0x13 hpl/tc/hpl_tc.o
+ *fill*         0x0040225b        0x1 
+ .rodata        0x0040225c       0x18 hpl/twihs/hpl_twihs.o
  .rodata.str1.4
-                0x004023e4       0x19 hpl/twihs/hpl_twihs.o
- *fill*         0x004023fd        0x3 
+                0x00402274       0x19 hpl/twihs/hpl_twihs.o
+ *fill*         0x0040228d        0x3 
  .rodata.str1.4
-                0x00402400       0x18 hpl/wdt/hpl_wdt.o
+                0x00402290       0x18 hpl/wdt/hpl_wdt.o
                                  0x15 (size before relaxing)
- .rodata        0x00402418        0x5 nRF24_driver.o
+ .rodata        0x004022a8        0x5 nRF24_driver.o
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x00402420                . = ALIGN (0x4)
- *fill*         0x0040241d        0x3 
+                0x004022b0                . = ALIGN (0x4)
+ *fill*         0x004022ad        0x3 
  *(.init)
- .init          0x00402420        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crti.o
-                0x00402420                _init
- .init          0x00402424        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtn.o
-                0x0040242c                . = ALIGN (0x4)
-                0x0040242c                __preinit_array_start = .
+ .init          0x004022b0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crti.o
+                0x004022b0                _init
+ .init          0x004022b4        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtn.o
+                0x004022bc                . = ALIGN (0x4)
+                0x004022bc                __preinit_array_start = .
  *(.preinit_array)
-                0x0040242c                __preinit_array_end = .
-                0x0040242c                . = ALIGN (0x4)
-                0x0040242c                __init_array_start = .
+                0x004022bc                __preinit_array_end = .
+                0x004022bc                . = ALIGN (0x4)
+                0x004022bc                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
- .init_array    0x0040242c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
-                0x00402430                __init_array_end = .
-                0x00402430                . = ALIGN (0x4)
+ .init_array    0x004022bc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
+                0x004022c0                __init_array_end = .
+                0x004022c0                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x00402430                . = ALIGN (0x4)
+                0x004022c0                . = ALIGN (0x4)
  *(.fini)
- .fini          0x00402430        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crti.o
-                0x00402430                _fini
- .fini          0x00402434        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtn.o
-                0x0040243c                . = ALIGN (0x4)
-                0x0040243c                __fini_array_start = .
+ .fini          0x004022c0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crti.o
+                0x004022c0                _fini
+ .fini          0x004022c4        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtn.o
+                0x004022cc                . = ALIGN (0x4)
+                0x004022cc                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x0040243c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
+ .fini_array    0x004022cc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x00402440                __fini_array_end = .
+                0x004022d0                __fini_array_end = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x00402440                . = ALIGN (0x4)
-                0x00402440                _efixed = .
+                0x004022d0                . = ALIGN (0x4)
+                0x004022d0                _efixed = .
                 [!provide]                PROVIDE (__exidx_start, .)
 
-.vfp11_veneer   0x00402440        0x0
- .vfp11_veneer  0x00402440        0x0 linker stubs
+.vfp11_veneer   0x004022d0        0x0
+ .vfp11_veneer  0x004022d0        0x0 linker stubs
 
-.v4_bx          0x00402440        0x0
- .v4_bx         0x00402440        0x0 linker stubs
+.v4_bx          0x004022d0        0x0
+ .v4_bx         0x004022d0        0x0 linker stubs
 
-.iplt           0x00402440        0x0
- .iplt          0x00402440        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
+.iplt           0x004022d0        0x0
+ .iplt          0x004022d0        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
 
-.eh_frame       0x00402440        0x0
- .eh_frame      0x00402440        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
+.eh_frame       0x004022d0        0x0
+ .eh_frame      0x004022d0        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
 
-.rel.dyn        0x00402440        0x0
- .rel.iplt      0x00402440        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
+.rel.dyn        0x004022d0        0x0
+ .rel.iplt      0x004022d0        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
 
-.jcr            0x00402440        0x0
- .jcr           0x00402440        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
+.jcr            0x004022d0        0x0
+ .jcr           0x004022d0        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
 
-.igot.plt       0x00402440        0x0
- .igot.plt      0x00402440        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
+.igot.plt       0x004022d0        0x0
+ .igot.plt      0x004022d0        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m/crtbegin.o
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
                 [!provide]                PROVIDE (__exidx_end, .)
-                0x00402440                . = ALIGN (0x4)
-                0x00402440                _etext = .
+                0x004022d0                . = ALIGN (0x4)
+                0x004022d0                _etext = .
 
-.relocate       0x20400000       0x24 load address 0x00402440
+.relocate       0x20400000       0x24 load address 0x004022d0
                 0x20400000                . = ALIGN (0x4)
                 0x20400000                _srelocate = .
  *(.ramfunc .ramfunc.*)
@@ -13278,7 +13573,7 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
                 0x20400024                . = ALIGN (0x4)
                 0x20400024                _erelocate = .
 
-.bss            0x20400024      0x144 load address 0x00402464
+.bss            0x20400024      0x12c load address 0x004022f4
                 0x20400024                . = ALIGN (0x4)
                 0x20400024                _sbss = .
                 0x20400024                _szero = .
@@ -13289,49 +13584,47 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
  .bss           0x20400074        0x4 hpl/pio/hpl_pio_ext.o
  .bss           0x20400078       0x20 hpl/pwm/hpl_pwm.o
  .bss           0x20400098        0x4 hpl/tc/hpl_tc.o
- .bss           0x2040009c       0x18 main.o
-                0x2040009c                x
  *(COMMON)
- COMMON         0x204000b4       0x94 driver_init.o
-                0x204000b4                PWM_0
-                0x204000d0                ADC_0
-                0x204000d4                WDT_0
-                0x204000d8                SPI_0
-                0x204000f0                PWM_1
-                0x2040010c                I2C_0
-                0x2040012c                TIMER_0
- COMMON         0x20400148       0x18 NPP.o
-                0x20400148                velocity_motor_dribbler
-                0x2040014c                velocity_motor_2
-                0x20400150                kicker
-                0x20400151                chipper
-                0x20400154                velocity_motor_3
-                0x20400158                velocity_motor_0
-                0x2040015c                velocity_motor_1
- COMMON         0x20400160        0x8 nRF24_driver.o
-                0x20400160                global_data_pointer
-                0x20400164                spi_0_io
-                0x20400168                . = ALIGN (0x4)
-                0x20400168                _ebss = .
-                0x20400168                _ezero = .
+ COMMON         0x2040009c       0x94 driver_init.o
+                0x2040009c                PWM_0
+                0x204000b8                ADC_0
+                0x204000bc                WDT_0
+                0x204000c0                SPI_0
+                0x204000d8                PWM_1
+                0x204000f4                I2C_0
+                0x20400114                TIMER_0
+ COMMON         0x20400130       0x18 NPP.o
+                0x20400130                velocity_motor_dribbler
+                0x20400134                velocity_motor_2
+                0x20400138                kicker
+                0x20400139                chipper
+                0x2040013c                velocity_motor_3
+                0x20400140                velocity_motor_0
+                0x20400144                velocity_motor_1
+ COMMON         0x20400148        0x8 nRF24_driver.o
+                0x20400148                global_data_pointer
+                0x2040014c                spi_0_io
+                0x20400150                . = ALIGN (0x4)
+                0x20400150                _ebss = .
+                0x20400150                _ezero = .
 
-.heap           0x20400168      0x200 load address 0x004025a8
-                0x20400168                . = ALIGN (0x8)
-                0x20400168                _sheap = .
-                0x20400368                . = (. + HEAP_SIZE)
- *fill*         0x20400168      0x200 
-                0x20400368                . = ALIGN (0x8)
-                0x20400368                _eheap = .
+.heap           0x20400150      0x200 load address 0x00402420
+                0x20400150                . = ALIGN (0x8)
+                0x20400150                _sheap = .
+                0x20400350                . = (. + HEAP_SIZE)
+ *fill*         0x20400150      0x200 
+                0x20400350                . = ALIGN (0x8)
+                0x20400350                _eheap = .
 
-.stack          0x20400368      0x400 load address 0x004027a8
-                0x20400368                . = ALIGN (0x8)
-                0x20400368                _sstack = .
-                0x20400768                . = (. + STACK_SIZE)
- *fill*         0x20400368      0x400 
-                0x20400768                . = ALIGN (0x8)
-                0x20400768                _estack = .
-                0x20400768                . = ALIGN (0x4)
-                0x20400768                _end = .
+.stack          0x20400350      0x400 load address 0x00402620
+                0x20400350                . = ALIGN (0x8)
+                0x20400350                _sstack = .
+                0x20400750                . = (. + STACK_SIZE)
+ *fill*         0x20400350      0x400 
+                0x20400750                . = ALIGN (0x8)
+                0x20400750                _estack = .
+                0x20400750                . = ALIGN (0x4)
+                0x20400750                _end = .
                 0x2045ffff                _ram_end_ = ((ORIGIN (ram) + LENGTH (ram)) - 0x1)
 OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
 
@@ -13435,7 +13728,7 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .comment       0x00000059       0x5a NPP.o
  .comment       0x00000059       0x5a nRF24_driver.o
 
-.debug_info     0x00000000    0x1e3c9
+.debug_info     0x00000000    0x1e340
  .debug_info    0x00000000      0x622 atmel_start.o
  .debug_info    0x00000622      0xae4 Device_Startup/startup_sams70n20b.o
  .debug_info    0x00001106     0x6c1c driver_init.o
@@ -13461,11 +13754,11 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_info    0x000162c3     0x133c hpl/tc/hpl_tc.o
  .debug_info    0x000175ff      0xe70 hpl/twihs/hpl_twihs.o
  .debug_info    0x0001846f      0x4c3 hpl/wdt/hpl_wdt.o
- .debug_info    0x00018932     0x1c55 main.o
- .debug_info    0x0001a587     0x18cc NPP.o
- .debug_info    0x0001be53     0x2576 nRF24_driver.o
+ .debug_info    0x00018932     0x1bcc main.o
+ .debug_info    0x0001a4fe     0x18cc NPP.o
+ .debug_info    0x0001bdca     0x2576 nRF24_driver.o
 
-.debug_abbrev   0x00000000     0x3db1
+.debug_abbrev   0x00000000     0x3d79
  .debug_abbrev  0x00000000      0x104 atmel_start.o
  .debug_abbrev  0x00000104      0x153 Device_Startup/startup_sams70n20b.o
  .debug_abbrev  0x00000257      0x35c driver_init.o
@@ -13491,11 +13784,11 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_abbrev  0x00002c1b      0x38a hpl/tc/hpl_tc.o
  .debug_abbrev  0x00002fa5      0x2b4 hpl/twihs/hpl_twihs.o
  .debug_abbrev  0x00003259      0x1b1 hpl/wdt/hpl_wdt.o
- .debug_abbrev  0x0000340a      0x35a main.o
- .debug_abbrev  0x00003764      0x2ef NPP.o
- .debug_abbrev  0x00003a53      0x35e nRF24_driver.o
+ .debug_abbrev  0x0000340a      0x322 main.o
+ .debug_abbrev  0x0000372c      0x2ef NPP.o
+ .debug_abbrev  0x00003a1b      0x35e nRF24_driver.o
 
-.debug_loc      0x00000000     0xc13f
+.debug_loc      0x00000000     0xc11f
  .debug_loc     0x00000000       0x20 atmel_start.o
  .debug_loc     0x00000020       0x78 Device_Startup/startup_sams70n20b.o
  .debug_loc     0x00000098     0x28f0 driver_init.o
@@ -13520,11 +13813,11 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_loc     0x00009d48      0x65b hpl/tc/hpl_tc.o
  .debug_loc     0x0000a3a3      0x8ef hpl/twihs/hpl_twihs.o
  .debug_loc     0x0000ac92      0x443 hpl/wdt/hpl_wdt.o
- .debug_loc     0x0000b0d5      0x41f main.o
- .debug_loc     0x0000b4f4      0x1fa NPP.o
- .debug_loc     0x0000b6ee      0xa51 nRF24_driver.o
+ .debug_loc     0x0000b0d5      0x3ff main.o
+ .debug_loc     0x0000b4d4      0x1fa NPP.o
+ .debug_loc     0x0000b6ce      0xa51 nRF24_driver.o
 
-.debug_aranges  0x00000000      0xc60
+.debug_aranges  0x00000000      0xc58
  .debug_aranges
                 0x00000000       0x20 atmel_start.o
  .debug_aranges
@@ -13576,13 +13869,13 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_aranges
                 0x00000b40       0x50 hpl/wdt/hpl_wdt.o
  .debug_aranges
-                0x00000b90       0x28 main.o
+                0x00000b90       0x20 main.o
  .debug_aranges
-                0x00000bb8       0x38 NPP.o
+                0x00000bb0       0x38 NPP.o
  .debug_aranges
-                0x00000bf0       0x70 nRF24_driver.o
+                0x00000be8       0x70 nRF24_driver.o
 
-.debug_ranges   0x00000000      0xbf8
+.debug_ranges   0x00000000      0xbf0
  .debug_ranges  0x00000000       0x10 atmel_start.o
  .debug_ranges  0x00000010       0x18 Device_Startup/startup_sams70n20b.o
  .debug_ranges  0x00000028       0xb8 driver_init.o
@@ -13608,11 +13901,11 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_ranges  0x000009a0       0x78 hpl/tc/hpl_tc.o
  .debug_ranges  0x00000a18       0x88 hpl/twihs/hpl_twihs.o
  .debug_ranges  0x00000aa0       0x40 hpl/wdt/hpl_wdt.o
- .debug_ranges  0x00000ae0       0x90 main.o
- .debug_ranges  0x00000b70       0x28 NPP.o
- .debug_ranges  0x00000b98       0x60 nRF24_driver.o
+ .debug_ranges  0x00000ae0       0x88 main.o
+ .debug_ranges  0x00000b68       0x28 NPP.o
+ .debug_ranges  0x00000b90       0x60 nRF24_driver.o
 
-.debug_macro    0x00000000    0x39061
+.debug_macro    0x00000000    0x3906c
  .debug_macro   0x00000000      0x733 atmel_start.o
  .debug_macro   0x00000733      0x8b0 atmel_start.o
  .debug_macro   0x00000fe3      0x16d atmel_start.o
@@ -13800,17 +14093,17 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_macro   0x00036cfc       0x84 hpl/twihs/hpl_twihs.o
  .debug_macro   0x00036d80      0x5bb hpl/wdt/hpl_wdt.o
  .debug_macro   0x0003733b       0x3a hpl/wdt/hpl_wdt.o
- .debug_macro   0x00037375      0x94f main.o
- .debug_macro   0x00037cc4       0x1c main.o
- .debug_macro   0x00037ce0       0xd0 main.o
- .debug_macro   0x00037db0       0x28 main.o
- .debug_macro   0x00037dd8       0x34 main.o
- .debug_macro   0x00037e0c       0x58 main.o
- .debug_macro   0x00037e64      0x8f9 NPP.o
- .debug_macro   0x0003875d      0x83a nRF24_driver.o
- .debug_macro   0x00038f97       0xca nRF24_driver.o
+ .debug_macro   0x00037375      0x95a main.o
+ .debug_macro   0x00037ccf       0x1c main.o
+ .debug_macro   0x00037ceb       0xd0 main.o
+ .debug_macro   0x00037dbb       0x28 main.o
+ .debug_macro   0x00037de3       0x34 main.o
+ .debug_macro   0x00037e17       0x58 main.o
+ .debug_macro   0x00037e6f      0x8f9 NPP.o
+ .debug_macro   0x00038768      0x83a nRF24_driver.o
+ .debug_macro   0x00038fa2       0xca nRF24_driver.o
 
-.debug_line     0x00000000    0x17dd0
+.debug_line     0x00000000    0x17dcd
  .debug_line    0x00000000      0xd94 atmel_start.o
  .debug_line    0x00000d94      0x867 Device_Startup/startup_sams70n20b.o
  .debug_line    0x000015fb     0x1295 driver_init.o
@@ -13836,11 +14129,11 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_line    0x000125fc      0xda9 hpl/tc/hpl_tc.o
  .debug_line    0x000133a5      0xdf4 hpl/twihs/hpl_twihs.o
  .debug_line    0x00014199      0xccf hpl/wdt/hpl_wdt.o
- .debug_line    0x00014e68      0xfeb main.o
- .debug_line    0x00015e53      0xf76 NPP.o
- .debug_line    0x00016dc9     0x1007 nRF24_driver.o
+ .debug_line    0x00014e68      0xfe8 main.o
+ .debug_line    0x00015e50      0xf76 NPP.o
+ .debug_line    0x00016dc6     0x1007 nRF24_driver.o
 
-.debug_str      0x00000000   0x1232a3
+.debug_str      0x00000000   0x123301
  .debug_str     0x00000000   0x103358 atmel_start.o
                              0x103d85 (size before relaxing)
  .debug_str     0x00103358      0x700 Device_Startup/startup_sams70n20b.o
@@ -13891,14 +14184,14 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
                              0x103cbe (size before relaxing)
  .debug_str     0x0011e78b      0x271 hpl/wdt/hpl_wdt.o
                              0x102e04 (size before relaxing)
- .debug_str     0x0011e9fc     0x46f5 main.o
-                             0x1088dc (size before relaxing)
- .debug_str     0x001230f1       0x9f NPP.o
+ .debug_str     0x0011e9fc     0x4753 main.o
+                             0x1088db (size before relaxing)
+ .debug_str     0x0012314f       0x9f NPP.o
                              0x10811a (size before relaxing)
- .debug_str     0x00123190      0x113 nRF24_driver.o
+ .debug_str     0x001231ee      0x113 nRF24_driver.o
                              0x1071da (size before relaxing)
 
-.debug_frame    0x00000000     0x1e98
+.debug_frame    0x00000000     0x1e88
  .debug_frame   0x00000000       0x28 atmel_start.o
  .debug_frame   0x00000028       0x38 Device_Startup/startup_sams70n20b.o
  .debug_frame   0x00000060      0x1b8 driver_init.o
@@ -13924,8 +14217,8 @@ OUTPUT(Robot_Firmware_v17.2.elf elf32-littlearm)
  .debug_frame   0x00001944      0x134 hpl/tc/hpl_tc.o
  .debug_frame   0x00001a78       0xf8 hpl/twihs/hpl_twihs.o
  .debug_frame   0x00001b70       0xbc hpl/wdt/hpl_wdt.o
- .debug_frame   0x00001c2c       0x3c main.o
- .debug_frame   0x00001c68       0x64 NPP.o
- .debug_frame   0x00001ccc      0x180 nRF24_driver.o
- .debug_frame   0x00001e4c       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-init.o)
- .debug_frame   0x00001e78       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x00001c2c       0x2c main.o
+ .debug_frame   0x00001c58       0x64 NPP.o
+ .debug_frame   0x00001cbc      0x180 nRF24_driver.o
+ .debug_frame   0x00001e3c       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-init.o)
+ .debug_frame   0x00001e68       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc_nano.a(lib_a-memset.o)
