@@ -120,10 +120,10 @@ void wheelMotorPID(){
 //FIGURE OUT CCW vs CW HIGH/LOW for motor controller
 void setWheelMotorEffort(float effort0, float effort1, float effort2, float effort3){
 	//set PWM duty cycle
-	set_pwm_motor_0(&(PWM_0.device), effort0);
-	set_pwm_motor_1(&(PWM_0.device), effort1);
-	set_pwm_motor_2(&(PWM_0.device), effort2);
-	set_pwm_motor_3(&(PWM_0.device), effort3);
+	set_pwm_motor_0(effort0);
+	set_pwm_motor_1(effort1);
+	set_pwm_motor_2(effort2);
+	set_pwm_motor_3(effort3);
 	//set directions for motors based on effort
 	gpio_set_pin_level(Motor_0_Dir, ((effort0 > 0) ? CCW : CW));
 	gpio_set_pin_level(Motor_1_Dir, ((effort1 > 0) ? CCW : CW));
@@ -135,5 +135,5 @@ void setWheelMotorEffort(float effort0, float effort1, float effort2, float effo
 void setDribblerMotorEffort(){
 	int dribbler_pwm = velocity_motor_dribbler / V_CONSTANT_DRIBBLER;
 	gpio_set_pin_level(Dribbler_Motor_Dir, CCW);
-	set_pwm_dribbler_motor(&(PWM_1.device), dribbler_pwm);	
+	set_pwm_dribbler_motor(dribbler_pwm);	
 }

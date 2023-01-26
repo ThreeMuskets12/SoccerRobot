@@ -84,7 +84,11 @@ int main(void)
 	//initializeESC();
 	
 	while (1) {
-		set_pwm_motor_0(&(PWM_0.device), 2297);
+		set_pwm_motor_0(2297);
+		set_pwm_motor_1(555);
+		set_pwm_motor_2(123);
+		set_pwm_motor_3(1240);
+		set_pwm_dribbler_motor(888);
 		//wheel and dribbler time
 		//if(time_to_pid){
 		//	wheelMotorPID();

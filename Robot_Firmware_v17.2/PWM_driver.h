@@ -31,15 +31,12 @@ void set_pwm_channel(struct _pwm_device *const device, uint8_t channel, uint32_t
 *    duty_cycle is the duty cycle that we wish to set (see documentation for effort mapping)
 */
 //motor 0, output on pin PA13
-void set_pwm_motor_0(struct _pwm_device *const device, uint32_t duty_cycle);
+void set_pwm_motor_0(uint32_t duty_cycle);
 //motor 1, output on pin PA17
-void set_pwm_motor_1(struct _pwm_device *const device, uint32_t duty_cycle);
+void set_pwm_motor_1(uint32_t duty_cycle);
 //motor 2, output on pin PA2
-void set_pwm_motor_2(struct _pwm_device *const device, uint32_t duty_cycle);
+void set_pwm_motor_2(uint32_t duty_cycle);
 //motor 3, output on pin PD11
-void set_pwm_motor_3(struct _pwm_device *const device, uint32_t duty_cycle);
+void set_pwm_motor_3(uint32_t duty_cycle);
 //for dribbler motor, on second PWM instance, PWM_1
-void set_pwm_dribbler_motor(struct _pwm_device *const device,  uint32_t duty_cycle);
-
-//enables PWM and selected pins/clock dividers via Atmel.start
-void config_PWM(void);
+void set_pwm_dribbler_motor(uint32_t duty_cycle);
