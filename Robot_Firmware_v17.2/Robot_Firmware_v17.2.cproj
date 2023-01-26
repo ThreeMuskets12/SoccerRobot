@@ -493,6 +493,12 @@
     <Compile Include="driver_init.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="esc_calibration.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="esc_calibration.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="examples\driver_examples.c">
       <SubType>compile</SubType>
     </Compile>

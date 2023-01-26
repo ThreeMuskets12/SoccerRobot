@@ -9,6 +9,7 @@
 #include "NPP.h"
 #include "motor_controller.h"
 #include "timer_driver.h"
+#include "esc_calibration.h"
 
 int main(void)
 {
@@ -80,15 +81,14 @@ int main(void)
 	//setup_BQ7_for_adc(buffer, CELL_2);
 	//setup_BQ7_for_adc(buffer, CELL_3);
 	
+	//initializeESC();
 	
-		
-		
-		
 	while (1) {
+		set_pwm_motor_0(&(PWM_0.device), 2297);
 		//wheel and dribbler time
-		if(time_to_pid){
-			wheelMotorPID();
-		}
+		//if(time_to_pid){
+		//	wheelMotorPID();
+		//}
 		/*
 		gpio_set_pin_level(LED0, gpio_get_pin_level(DipSwitch0));
 		gpio_set_pin_level(LED1, gpio_get_pin_level(DipSwitch1));
@@ -119,11 +119,12 @@ int main(void)
 		IMU for new quaternion coefficients before it is ready with the next set of them. (also really only relevant for the demo code, in
 		reality it doesn't matter if we ask for coefficients before the IMU is ready with new ones, as the function will just return the last
 		valid coefficients it collected in the event that the IMU isn't ready with new ones) */
-		if(nRF_24_is_data_available(1)){ //There is data for me to collect :)
-			nRF24_receive_data(data_store);
-			for(int i = 0; i < 32; i++){
+		
+		//if(nRF_24_is_data_available(1)){ //There is data for me to collect :)
+			//nRF24_receive_data(data_store);
+			//for(int i = 0; i < 32; i++){
 				//printf("0x%02x\r\n", data_store[i]);
-			}
+			//}
 			//printf("%s\r\n",data_store); //If you want to print the received number to console you would have to add 48!!!
 			//uint8_t m_period;
 			//m_period = data_store[0];
@@ -136,10 +137,11 @@ int main(void)
 			memset(&data_store[0], 0, sizeof(uint8_t)*32);
 			*/
 			
-			NPP_process(&data_store[0], &robot_ID);
-			memset(&data_store[0], 0, sizeof(uint8_t)*32);
+			//NPP_process(&data_store[0], &robot_ID);
+			//memset(&data_store[0], 0, sizeof(uint8_t)*32);
 			
-		}
+			
+		//}
 		//get_IMU_quaternion();
 		////printf("%s", imu_vector_buffer[0]);
 		//float f = 32.3;

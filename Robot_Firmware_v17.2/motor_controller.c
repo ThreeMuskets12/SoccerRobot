@@ -4,7 +4,7 @@
  * Created: 11/16/2022 9:58:17 PM
  *  Author: evanv
 * Two bytes for a specified motor are input and are handled in the main firmware loop. This Driver implements the
-* speed controller using the encoders and PWM
+* closed loop speed controller with encoders for the drive motors and the open loop controller for the dribbler.
 */
 #include "motor_controller.h"
 //motor direction

@@ -14,6 +14,8 @@ Device_Startup\system_sams70n20b.c
 
 driver_init.c
 
+esc_calibration.c
+
 examples\driver_examples.c
 
 hal\src\hal_adc_sync.c
