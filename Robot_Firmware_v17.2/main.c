@@ -84,11 +84,18 @@ int main(void)
 	//initializeESC();
 	
 	while (1) {
-		set_pwm_motor_0(2297);
-		set_pwm_motor_1(555);
-		set_pwm_motor_2(123);
-		set_pwm_motor_3(1240);
-		set_pwm_dribbler_motor(888);
+		//gpio_set_pin_level(LED0, 0);
+		
+		if(gpio_get_pin_level(DipSwitch7)){
+			set_pwm_motor_0(878);
+		}
+		else if(gpio_get_pin_level(DipSwitch6)){
+			set_pwm_motor_0(1171);
+		}
+		else if(gpio_get_pin_level(DipSwitch5)){
+			set_pwm_motor_0(600);
+		}
+		
 		//wheel and dribbler time
 		//if(time_to_pid){
 		//	wheelMotorPID();

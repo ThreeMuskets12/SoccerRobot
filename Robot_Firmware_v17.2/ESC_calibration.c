@@ -33,23 +33,27 @@ void initializeESC(void){
 	gpio_set_pin_level(LED0, 1);
 	//wait for power supply
 	
-	delay_ms(5000);
+	delay_ms(4000);
 	
-	//2 - 100%, supply power 
-	set_pwm_motor_0(PWM_MAX);
+	//2 - 100%, supply power, 8 sec high
+	for(int i=0; i<8000; i++){
+		set_pwm_motor_0(PWM_MAX);
+		delay_ms(1);
+	}
 	gpio_set_pin_level(LED1, 1);
-	//3 - delay
-	delay_ms(8000);
-	//4 - disconnect power, 100% command
-	for(int i=0; i<5000; i++){
+	delay_ms(4000);
+	
+	//4 - disconnected power, 100% command
+	for(int i=0; i<1000; i++){
 		set_pwm_motor_0( PWM_MAX);
+		delay_ms(1);
 	}
 	//wait 2 seconds
 	gpio_set_pin_level(LED2, 1);
-	delay_ms(2000);
+	delay_ms(4000);
 	//reconnect power
 	for(int i=0; i<1000; i++){
-		set_pwm_motor_0( PWM_MAX);
+		set_pwm_motor_0(PWM_MAX);
 	}
 	//sweep from 100% to 0% in about 4 seconds
 	for(int k=PWM_MAX; k>PWM_ZERO; k--){
@@ -57,9 +61,5 @@ void initializeESC(void){
 		delay_ms(13);
 	}
 	delay_ms(5000);
-	gpio_set_pin_level(LED3, 1);
-
-	
-	
-	
+	gpio_set_pin_level(LED3, 1);	
 }
