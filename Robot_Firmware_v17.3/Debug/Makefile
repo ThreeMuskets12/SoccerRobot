@@ -67,6 +67,7 @@ C_SRCS +=  \
 ../Device_Startup/startup_sams70n20b.c \
 ../Device_Startup/system_sams70n20b.c \
 ../driver_init.c \
+../encoder_driver.c \
 ../ESC_calibration.c \
 ../examples/driver_examples.c \
 ../hal/src/hal_adc_sync.c \
@@ -121,6 +122,7 @@ BQ76925_driver.o \
 Device_Startup/startup_sams70n20b.o \
 Device_Startup/system_sams70n20b.o \
 driver_init.o \
+encoder_driver.o \
 ESC_calibration.o \
 examples/driver_examples.o \
 hal/src/hal_adc_sync.o \
@@ -168,6 +170,7 @@ BQ76925_driver.o \
 Device_Startup/startup_sams70n20b.o \
 Device_Startup/system_sams70n20b.o \
 driver_init.o \
+encoder_driver.o \
 ESC_calibration.o \
 examples/driver_examples.o \
 hal/src/hal_adc_sync.o \
@@ -215,6 +218,7 @@ BQ76925_driver.d \
 Device_Startup/startup_sams70n20b.d \
 Device_Startup/system_sams70n20b.d \
 driver_init.d \
+encoder_driver.d \
 ESC_calibration.d \
 examples/driver_examples.d \
 hal/src/hal_adc_sync.d \
@@ -262,6 +266,7 @@ BQ76925_driver.d \
 Device_Startup/startup_sams70n20b.d \
 Device_Startup/system_sams70n20b.d \
 driver_init.d \
+encoder_driver.d \
 ESC_calibration.d \
 examples/driver_examples.d \
 hal/src/hal_adc_sync.d \
@@ -360,6 +365,13 @@ Device_Startup/system_sams70n20b.o: ../Device_Startup/system_sams70n20b.c
 	
 
 ./driver_init.o: .././driver_init.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMS70N20B__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../Config" -I".." -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/afec" -I"../hpl/core" -I"../hpl/pio" -I"../hpl/pmc" -I"../hpl/pwm" -I"../hpl/spi" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/twihs" -I"../hpl/wdt" -I"../hpl/xdmac" -I"../hri" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.4.134\sams70b\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m7 -c -std=gnu99 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./encoder_driver.o: .././encoder_driver.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMS70N20B__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../Config" -I".." -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/afec" -I"../hpl/core" -I"../hpl/pio" -I"../hpl/pmc" -I"../hpl/pwm" -I"../hpl/spi" -I"../hpl/systick" -I"../hpl/tc" -I"../hpl/twihs" -I"../hpl/wdt" -I"../hpl/xdmac" -I"../hri" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMS70_DFP\2.4.134\sams70b\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m7 -c -std=gnu99 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

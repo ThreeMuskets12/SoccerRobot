@@ -12,10 +12,10 @@
 #include "esc_calibration.h"
 #include "ADC_driver.h"
 
-
 int main(void)
 {
 	atmel_start_init();
+	encoders_init();
 	
 	gpio_set_pin_level(LED0, 0);
 	gpio_set_pin_level(LED1, 0);
@@ -46,35 +46,13 @@ int main(void)
 	
 	adc_init();
 	
-	//initializeESC();
-	
 	while (1) {
-		if(nRF_24_is_data_available(1)){ //There is data for me to collect :)
-			nRF24_receive_data(data_store);
-			NPP_process(&data_store[0], &robot_ID);
-			memset(&data_store[0], 0, sizeof(uint8_t)*32);
-			
-			wheelMotorPID();
-		}
+		velocity_motor_0 = 10;
+		velocity_motor_1 = 10;
+		velocity_motor_2 = 10;
+		velocity_motor_3 = 10;
+
 		
-		adc_read(&adc_value_battery_current, ADC_BATTERY_CURRENT);
-		adc_read(&adc_value_battery_voltage, ADC_BATTERY_VOLTAGE);
-		adc_read(&adc_value_cap_charge, ADC_CAP_CHARGE);
-		
-		if(gpio_get_pin_level(DipSwitch7)){
-			set_pwm_motor_0(878);
-		}
-		else if(gpio_get_pin_level(DipSwitch6)){
-			set_pwm_motor_0(1171);
-		}
-		else if(gpio_get_pin_level(DipSwitch5)){
-			set_pwm_motor_0(600);
-		}
-		
-		//wheel and dribbler time
-		//if(time_to_pid){
-		//	wheelMotorPID();
-		//}
 	}
 	
 }

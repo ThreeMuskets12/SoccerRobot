@@ -11,30 +11,38 @@
 const char CCW = 1;
 const char CW = 0;
 
-//Define encoder interrupts and have quadrature channel processing in separate file
-//make variables externs/globals in the encoder file
+//back left encoder
+extern long int back_left_counter;
+long int back_left_counter_old = 0;
+//back right encoder 
+extern long int back_right_counter;
+long int back_right_counter_old = 0;
+//front left encoder
+extern long int front_left_counter;
+long int front_left_counter_old = 0;
+//front right encoder
+extern long int front_right_counter;
+long int front_right_counter_old = 0;
 
-//encoder 0
-long int enc_n0 = 0;
-long int enc_n0o = 0;
-//encoder 1
-long int enc_n1 = 0;
-long int enc_n1o = 0;
-//encoder 2
-long int enc_n2 = 0;
-long int enc_n2o = 0;
-//encoder 3
-long int enc_n3 = 0;
-long int enc_n3o = 0;
-
-//sum of error, resets after 
+//sum of error
 static float error_sum0=0;
 static float error_sum1=0;
 static float error_sum2=0;
 static float error_sum3=0;
 
+float ppr = 48;
+float diameter = 70;
+
+float getRads(){
+	
+	;
+}
+
 //initialize velocity constant once based on the encoder resolution, etc
-float v_c = (2.00*PI)/(1024.0*DELTA_T); //convert d(enc) to [rad/s]
+//[rad/s]
+float v_c_r = (2.00*PI)/(ppr*DELTA_T); //convert d(enc) to [rad/s]
+//[m/s]
+float v_c_l = (PI*diameter)/(ppr*DELTA_T);
 
 //resets error sum of certain PI controller to 0 based on new command
 void resetErrorSum(){
@@ -43,22 +51,43 @@ void resetErrorSum(){
 	error_sum2=0;
 	error_sum3=0;
 }
-//returns the current encoder count of the wheel
-int getEncoder(int wheel){
-	return 0;
+//gets current count of encoder based on wheel
+// 0 - FR, 1 - FL, 2- BL, 3 - BR
+long int getEncoder(int wheel){
+	switch(wheel){
+		case 0:
+			return front_right_counter;
+		case 1:
+			return front_left_counter;
+		case 2:
+			return back_left_counter;
+		case 3:
+			return back_right_counter;
+	}
 }
 
-//return old encoder count of wheel
-int getOldEncoder(int wheel){
-	return 0;
-};
+//gets old encoder count before PID update
+long int getOldEncoder(int wheel){
+	switch(wheel){
+		case 0:
+			return front_right_counter_old;
+		case 1:
+			return front_left_counter_old;
+		case 2:
+			return back_left_counter_old;
+		case 3:
+			return back_right_counter_old;
+	}
+}
 
 //calculate wheel speeds [rad/s]
+//wheel is ID
 float calcWheelSpeed(int wheel){
 	float current_speed;
-	float enc_n = getEncoder(wheel);
-	float enc_o = getOldEncoder(wheel);
-	current_speed = (float)(enc_n - enc_o)*v_c; //[rad/s]
+	//get encoder counts new and old
+	float enc_n = (float) getEncoder(wheel);
+	float enc_o = (float) getOldEncoder(wheel);
+	current_speed = (float)(enc_n - enc_o)*v_c_r; //[rad/s] or [m/s]
 	return current_speed; // [rad/s]
 }
 

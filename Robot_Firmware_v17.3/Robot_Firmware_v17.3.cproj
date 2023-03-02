@@ -187,6 +187,18 @@
         <NonsecureFilesInfo />
       </AcmeProjectConfig>
     </AcmeProjectConfig>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.52.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -469,6 +481,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="driver_init.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="encoder_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="encoder_driver.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ESC_calibration.c">

@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "NPP.h"
 #include "PWM_driver.h"
+#include "encoder_driver.h"
 
 //physical constants
 #define WHEEL_D (7.0) //wheel diameter [cm]
@@ -34,9 +35,9 @@
 
 void resetErrorSum(void);
 
-int getEncoder(int wheel);
+long int getEncoder(int wheel);
 
-int getOldEncoder(int wheel);
+long int getOldEncoder(int wheel);
 
 float calcWheelSpeed(int wheel);
 

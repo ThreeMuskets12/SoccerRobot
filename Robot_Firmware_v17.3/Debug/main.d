@@ -161,8 +161,8 @@ main.d main.o: .././main.c ../atmel_start.h ../driver_init.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
  .././bno085_driver.h .././nRF24_driver.h .././PWM_driver.h \
  .././atmel_start.h .././atmel_start_pins.h .././BQ76925_driver.h \
- .././NPP.h .././motor_controller.h .././timer_driver.h \
- .././esc_calibration.h .././ADC_driver.h
+ .././NPP.h .././motor_controller.h .././encoder_driver.h \
+ .././timer_driver.h .././esc_calibration.h .././ADC_driver.h
 
 ../atmel_start.h:
 
@@ -587,6 +587,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 .././NPP.h:
 
 .././motor_controller.h:
+
+.././encoder_driver.h:
 
 .././timer_driver.h:
 

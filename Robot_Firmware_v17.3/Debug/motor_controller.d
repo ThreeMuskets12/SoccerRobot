@@ -160,7 +160,8 @@ motor_controller.d motor_controller.o: .././motor_controller.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_pthreadtypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\types.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
- .././NPP.h .././PWM_driver.h .././atmel_start.h .././atmel_start_pins.h
+ .././NPP.h .././PWM_driver.h .././atmel_start.h .././atmel_start_pins.h \
+ .././encoder_driver.h
 
 .././motor_controller.h:
 
@@ -579,3 +580,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 .././atmel_start.h:
 
 .././atmel_start_pins.h:
+
+.././encoder_driver.h:
