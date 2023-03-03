@@ -7,8 +7,8 @@
  * Note: unnecessary if switched to motor controllers.
  */ 
 #include "PWM_driver.h"
-#define PWM_MAX 1171
-#define PWM_ZERO 878
+#define PWM_MAX 2928
+#define PWM_ZERO 0
 /*
 1) no power to ESC, but send 100% speed command to ESC non stop
 2) power to ESC while still sending 100% speed command to ESC
