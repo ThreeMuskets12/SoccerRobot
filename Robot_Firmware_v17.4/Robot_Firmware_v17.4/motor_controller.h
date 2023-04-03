@@ -12,13 +12,13 @@
 #include <stdio.h>
 #include "NPP.h"
 #include "PWM_driver.h"
+#include "encoder_driver.h"
 
 //physical constants
-#define WHEEL_D (7.0) //wheel diameter [cm]
+#define W_DIAMETER (0.07) //wheel diameter [m]
 #define DRIBBLER_D (1.0) //outer diameter of dribbler module
-#define ENCODER (1024) //variable encoder resolution
-#define SHAFT (0.4) //wheel radius [cm]
-#define S_R (0.05714) //speed ratio of 1:17.5 (wheel:shaft)
+#define PPR (1024) //variable encoder resolution
+
 //PID constants
 #define KP (15.7)
 #define KI (4.3)
@@ -30,23 +30,34 @@
 #define PWM_PER (2928) //2928 pulses per pwm period.
 #define RATED_LOAD_W_D (545)// rated angular speed for dribbler motor [rad/s]
 #define V_CONSTANT_DRIBBLER (0.1859) //rad/s /PWM step
-#define MAX_ROTATIONAL_VELOCITY 300 //max rad/s
+
+
 //Define encoder interrupts and have quadrature channel processing in separate file
 
 void resetErrorSum(void);
 
-int getEncoder(int wheel);
+float wheel_speed_front_left();
 
-int getOldEncoder(int wheel);
+float wheel_speed_front_left();
 
-float calcWheelSpeed(int wheel);
+float wheel_speed_back_right();
+
+float wheel_speed_back_left();
 
 double dribblerSpeed();
 
-void wheelMotorPID(void);
+void wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br);
 
 void setDribblerMotorEffort(void);
 
-void setWheelMotorEffort(float effort0, float effort1, float effort2, float effort3);
+void setWheelMotorEffort(float effort_front_right, float effort_front_left, float effort_back_left, float effort_back_right);
 
-uint32_t radian_to_PWM_mag(float effort);
+//Non-hardcoded versions of wheel speeds:
+
+float calcWheelSpeed(int wheel);
+
+long int getEncoder(int wheel);
+
+long int getOldEncoder(int wheel);
+
+void setOldEncoder(int wheel);

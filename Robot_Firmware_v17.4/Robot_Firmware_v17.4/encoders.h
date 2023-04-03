@@ -1,19 +1,13 @@
 /*
- * encoders.h
+ * encoder_driver.h
  *
- * Created: 2/1/2023 5:28:42 PM
- *  Author: tonat
+ * Created: 2/23/2023 11:55:36 PM
+ *  Author: evanv
  */ 
-
-
-#ifndef ENCODERS_H_
-#define ENCODERS_H_
+#ifndef ENCODERSH
+#define ENCODERSH
 #include "atmel_start_pins.h"
-
-extern int back_left_counter;
-extern int back_right_counter;
-extern int front_left_counter;
-extern int front_right_counter;
+#include "atmel_start.h"
 
 void encoders_init();
 void interrupt_front_left();
@@ -24,4 +18,4 @@ int front_left_counts();
 int front_right_counts();
 int back_left_counts();
 int back_right_counts();
-#endif /* ENCODERS_H_ */
+#endif /* ENCODERSH */
