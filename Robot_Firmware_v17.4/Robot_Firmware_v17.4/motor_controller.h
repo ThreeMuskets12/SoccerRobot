@@ -17,7 +17,7 @@
 //physical constants
 #define W_DIAMETER (0.07) //wheel diameter [m]
 #define DRIBBLER_D (1.0) //outer diameter of dribbler module
-#define PPR (1024) //variable encoder resolution
+#define PPR (2048) //variable encoder resolution
 
 //PID constants
 #define KP (15.7)
@@ -29,6 +29,9 @@
 #define PI (3.1415)
 #define PWM_PER (2928) //2928 pulses per pwm period.
 #define RATED_LOAD_W_D (545)// rated angular speed for dribbler motor [rad/s]
+#define PWM_MAX 2737
+#define PWM_ZERO 2445
+#define PWM_MAX_NEG 2143
 #define V_CONSTANT_DRIBBLER (0.1859) //rad/s /PWM step
 
 

@@ -115,17 +115,17 @@ void wheelMotorPID(float target_fr, float target_fl, float target_bl, float targ
 	
 	//calculate the general min/max range of effort before mapping to PWM
 	//0
-	effort_front_right = (effort_front_right >= PWM_PER) ? PWM_PER : effort_front_right;
-	effort_front_right = (effort_front_right <= -PWM_PER) ? -PWM_PER : effort_front_right;
+	effort_front_right = (effort_front_right >= PWM_MAX) ? PWM_MAX : effort_front_right;
+	effort_front_right = (effort_front_right <= -PWM_MAX_NEG) ? -PWM_MAX_NEG : effort_front_right;
 	//1
-	effort_front_left = (effort_front_left >= PWM_PER) ? PWM_PER : effort_front_left;
-	effort_front_left = (effort_front_left <= -PWM_PER) ? -PWM_PER : effort_front_left;
+	effort_front_left = (effort_front_left >= PWM_MAX) ? PWM_MAX : effort_front_left;
+	effort_front_left = (effort_front_left <= -PWM_MAX_NEG) ? -PWM_MAX_NEG : effort_front_left;
 	//2
-	effort_back_left = (effort_back_left >= PWM_PER) ? PWM_PER : effort_back_left;
-	effort_back_left = (effort_back_left <= -PWM_PER) ? -PWM_PER : effort_back_left;
+	effort_back_left = (effort_back_left >= PWM_MAX) ? PWM_MAX : effort_back_left;
+	effort_back_left = (effort_back_left <= -PWM_MAX_NEG) ? -PWM_MAX_NEG : effort_back_left;
 	//3
-	effort_back_right = (effort_back_right >= PWM_PER) ? PWM_PER : effort_back_right;
-	effort_back_right = (effort_back_right <= -PWM_PER) ? -PWM_PER : effort_back_right;
+	effort_back_right = (effort_back_right >= PWM_MAX) ? PWM_MAX : effort_back_right;
+	effort_back_right = (effort_back_right <= -PWM_MAX_NEG) ? -PWM_MAX_NEG : effort_back_right;
 	
 	setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
 	
@@ -140,10 +140,10 @@ void setWheelMotorEffort(float effort_front_right, float effort_front_left, floa
 	set_pwm_motor_2(effort_back_left);
 	set_pwm_motor_3(effort_back_right);
 	//set directions for motors based on effort
-	gpio_set_pin_level(Motor_0_Dir, ((effort_front_right > 0) ? CCW : CW));
+	/*gpio_set_pin_level(Motor_0_Dir, ((effort_front_right > 0) ? CCW : CW));
 	gpio_set_pin_level(Motor_1_Dir, ((effort_front_left > 0) ? CCW : CW));
 	gpio_set_pin_level(Motor_2_Dir, ((effort_back_left > 0) ? CCW : CW));
-	gpio_set_pin_level(Motor_3_Dir, ((effort_back_right > 0) ? CCW : CW));	
+	gpio_set_pin_level(Motor_3_Dir, ((effort_back_right > 0) ? CCW : CW));	*/
 }
 
 //dribbler target velocity in rad/s
