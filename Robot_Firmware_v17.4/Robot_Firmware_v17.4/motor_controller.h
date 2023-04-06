@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "NPP.h"
 #include "PWM_driver.h"
-#include "encoder_driver.h"
+#include "encoders.h"
 
 //physical constants
 #define W_DIAMETER (0.07) //wheel diameter [m]
