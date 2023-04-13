@@ -73,6 +73,8 @@ int main(void)
 	
 	delay_ms(4000);
 	
+	int pid_done = 0;
+	
 	while (1) {
 		
 		//process information sent from hub
@@ -106,8 +108,10 @@ int main(void)
 		}*/
 		
 		//wheel and dribbler time
-		if(time_to_pid){
-			wheelMotorPID(0, 0, 10, 0);
+		volatile float s = wheel_speed_back_left();
+		
+		if(time_to_pid && !pid_done){
+			pid_done = wheelMotorPID(0, 0, 1.2, 0);
 			//setWheelMotorEffort(50, 150, -225, -100); //for testing motor controllers
 			//set_pwm_dribbler_motor(100);
 			//robot_stop--;

@@ -47,7 +47,7 @@ void resetErrorSum(){
 //hardcoded wheel speed calculations
 float wheel_speed_front_right(){
 	float current_speed;
-	current_speed = (float)(front_right_counter - front_right_counter_old)*v_c_r; //rad/s or m/s
+	current_speed = (float)(front_right_counter - front_right_counter_old)*v_c_l; //rad/s or m/s
 	//set encoder previous encoder count
 	front_right_counter_old = front_right_counter;
 	return current_speed;
@@ -55,7 +55,7 @@ float wheel_speed_front_right(){
 
 float wheel_speed_front_left(){
 	float current_speed;
-	current_speed = (float)(front_left_counter - front_left_counter_old)*v_c_r; //rad/s or m/s
+	current_speed = (float)(front_left_counter - front_left_counter_old)*v_c_l; //rad/s or m/s
 	//set encoder previous encoder count
 	front_left_counter_old = front_left_counter;
 	return current_speed;
@@ -64,7 +64,7 @@ float wheel_speed_front_left(){
 
 float wheel_speed_back_left(){
 	float current_speed;
-	current_speed = (float)(back_left_counter - back_left_counter_old)*v_c_r; //rad/s or m/s
+	current_speed = (float)(back_left_counter - back_left_counter_old)*v_c_l; //rad/s or m/s
 	//set encoder previous encoder count
 	back_left_counter_old = back_left_counter;
 	return current_speed;
@@ -72,30 +72,56 @@ float wheel_speed_back_left(){
 
 float wheel_speed_back_right(){
 	float current_speed;
-	current_speed = (float)(back_right_counter - back_right_counter_old)*v_c_r; //rad/s or m/s
+	current_speed = (float)(back_right_counter - back_right_counter_old)*v_c_l; //rad/s or m/s
 	//set encoder previous encoder count
 	back_right_counter_old = back_right_counter;
 	return current_speed;
 }
 
+//converts linear velocity to the range of pwm for error signal
+float convert_linear_to_pwm(int flip, float error){
+	volatile float correction;
+	if(flip){
+		correction = 2455 - error*28.2 - 10;
+		correction = correction;
+	}
+	else{correction = error*28.2 + 2455 + 10;}
+	
+	return correction;
+}
+
 //calculates efforts based on error target speed, [rad/s]
 //target speeds included from NPP 
 //maximum change in angular velocity is 285.71 rad/s
-void wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br){
+int wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br){
 	//calculate error for each motors
+	volatile float s;
+	s = wheel_speed_back_left();
 	float error_front_right = target_fr - wheel_speed_front_right();
 	float error_front_left = target_fl - wheel_speed_front_left();
-	float error_back_left = target_bl - wheel_speed_back_left();
+	float error_back_left = target_bl - s;
 	float error_back_right = target_br - wheel_speed_back_right();
-
+	
 	//update each error sum
 	error_sum_front_right += error_front_right;
-	error_sum_front_left += error_front_left;
+	error_sum_front_left += error_front_left;//error_front_left;
 	error_sum_back_left += error_back_left;
 	error_sum_back_right += error_sum_back_right;
-
+	
+	//all motors within range
+	if(abs(error_front_right) <= 0.05 && abs(error_front_left) <= 0.05 && abs(error_back_left) <= 0.05 && abs(error_back_right) <= 0.05){
+		return 1;
+	}
+	
+	//map [min_linear, max_linear] to [min_pwm, max_pwm] 
+	//error_front_right = convert_linear_to_pwm(0, error_front_right);
+	//error_front_left = convert_linear_to_pwm(0, error_front_left);
+	//error_back_right = convert_linear_to_pwm(0, error_back_right);
+	error_back_left = convert_linear_to_pwm(1, error_back_left);
+	
 	//check error sums against I-limit and adjust
 	//0
+	
 	if ((error_sum_front_right)> PID_I_Limit) error_sum_front_right= PID_I_Limit;
 	if ((error_sum_front_right)< -PID_I_Limit) error_sum_front_right=-PID_I_Limit;
 	//1
@@ -109,13 +135,16 @@ void wheelMotorPID(float target_fr, float target_fl, float target_bl, float targ
 	if ((error_sum_back_right)< -PID_I_Limit) error_sum_back_right=-PID_I_Limit;
 	
 	//compute efforts using PI control
-	float effort_front_right = KP * error_front_right + KI * error_sum_front_right;
-	float effort_front_left = KP * error_front_left + KI * error_sum_front_left;
-	float effort_back_left = KP * error_back_left + KI * error_sum_back_left;
-	float effort_back_right = KP * error_back_right + KI * error_sum_back_right;
+	float effort_front_right = error_front_right + KI * error_sum_front_right;
+	float effort_front_left = error_front_left + KI * error_sum_front_left;
+	float effort_back_left = error_back_left + KI * error_sum_back_left;
+	float effort_back_right = error_back_right + KI * error_sum_back_right;
+	
+	setWheelMotorEffort(2455, 2455, effort_back_left, 2455);
 	
 	//calculate the general min/max range of effort before mapping to PWM
 	//0
+	/*
 	effort_front_right = (effort_front_right >= PWM_MAX) ? PWM_MAX : effort_front_right;
 	effort_front_right = (effort_front_right <= PWM_MAX_NEG) ? PWM_MAX_NEG : effort_front_right;
 	//1
@@ -127,9 +156,12 @@ void wheelMotorPID(float target_fr, float target_fl, float target_bl, float targ
 	//3
 	effort_back_right = (effort_back_right >= PWM_MAX) ? PWM_MAX : effort_back_right;
 	effort_back_right = (effort_back_right <= PWM_MAX_NEG) ? PWM_MAX_NEG : effort_back_right;
+	*/
 	
-	setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
+	//still need correcting
+	return 0;
 	
+
 }
 
 //handles magnitude and direction of motor

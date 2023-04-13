@@ -20,8 +20,8 @@
 #define PPR (256) //variable encoder resolution
 
 //PID constants
-#define KP (1.57)
-#define KI (0.43)
+#define KP (28.2)
+#define KI (0.01)
 #define PID_I_Limit (72) //need to be determined experimentally
 #define FREQ (100) //desired PID freq.[Hz]
 #define DELTA_T (0.01) // [s]
@@ -49,7 +49,7 @@ float wheel_speed_back_left();
 
 double dribblerSpeed();
 
-void wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br);
+int wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br);
 
 void setDribblerMotorEffort(void);
 
@@ -64,3 +64,5 @@ long int getEncoder(int wheel);
 long int getOldEncoder(int wheel);
 
 void setOldEncoder(int wheel);
+
+float convert_linear_to_pwm(int flip, float error);
