@@ -95,11 +95,11 @@ float convert_linear_to_pwm(int flip, float error){
 //maximum change in angular velocity is 285.71 rad/s
 int wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br){
 	//calculate error for each motors
-	volatile float s;
-	s = wheel_speed_back_left();
+	//volatile float s;
+	//s = wheel_speed_front_left();
 	float error_front_right = target_fr - wheel_speed_front_right();
 	float error_front_left = target_fl - wheel_speed_front_left();
-	float error_back_left = target_bl - s;
+	float error_back_left = target_bl - wheel_speed_back_left();
 	float error_back_right = target_br - wheel_speed_back_right();
 	
 	//update each error sum
@@ -115,7 +115,7 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	
 	//map [min_linear, max_linear] to [min_pwm, max_pwm] 
 	//error_front_right = convert_linear_to_pwm(0, error_front_right);
-	//error_front_left = convert_linear_to_pwm(0, error_front_left);
+	error_front_left = convert_linear_to_pwm(0, error_front_left);
 	//error_back_right = convert_linear_to_pwm(0, error_back_right);
 	error_back_left = convert_linear_to_pwm(1, error_back_left);
 	
@@ -140,7 +140,7 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	float effort_back_left = error_back_left + KI * error_sum_back_left;
 	float effort_back_right = error_back_right + KI * error_sum_back_right;
 	
-	setWheelMotorEffort(2455, 2455, effort_back_left, 2455);
+	setWheelMotorEffort(2455, effort_front_left, 2455, 2455);
 	
 	//calculate the general min/max range of effort before mapping to PWM
 	//0

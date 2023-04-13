@@ -22,7 +22,7 @@
 //PID constants
 #define KP (28.2)
 #define KI (0.01)
-#define PID_I_Limit (72) //need to be determined experimentally
+#define PID_I_Limit (720) //need to be determined experimentally
 #define FREQ (100) //desired PID freq.[Hz]
 #define DELTA_T (0.01) // [s]
 //math constants

@@ -15,7 +15,7 @@
 #include "dipswitch_and_LEDs.h"
 
 //temp definitions
-#define MOTOR_TARGET 3
+#define MOTOR_TARGET 0
 
 int main(void)
 {
@@ -108,17 +108,17 @@ int main(void)
 		}*/
 		
 		//wheel and dribbler time
-		volatile float s = wheel_speed_back_left();
+		volatile float r = wheel_speed_back_left();
 		
-		if(time_to_pid && !pid_done){
-			pid_done = wheelMotorPID(0, 0, 1.2, 0);
+		if(time_to_pid){
+			//pid_done = wheelMotorPID(0, 1.2, 0, 0);
 			//setWheelMotorEffort(50, 150, -225, -100); //for testing motor controllers
 			//set_pwm_dribbler_motor(100);
 			//robot_stop--;
 			time_to_pid = 0;
-			/*
-			dipswitch_state = dipswitch_read();
-			switch(dipswitch_read()){
+			
+			//dipswitch_state = read_dipswitch();
+			switch(read_dipswitch()){
 				case 0b0000: set_pwm_drive_motor(MOTOR_TARGET, PWM_ZERO);
 					break;
 				case 0b0001: set_pwm_drive_motor(MOTOR_TARGET, 2500);
@@ -141,13 +141,13 @@ int main(void)
 					break;
 			}
 			
-			set_pwm_drive_motor(0, PWM_ZERO);
+			set_pwm_drive_motor(3, PWM_ZERO);
 			set_pwm_drive_motor(1, PWM_ZERO);
 			set_pwm_drive_motor(2, PWM_ZERO);
 			
 			current_wheel_speed = wheel_speed_front_right();
-			LED_set((uint8_t)current_wheel_speed);
-			*/
+			set_LEDs((uint8_t)current_wheel_speed);
+			
 		}
 		
 		//adc time
