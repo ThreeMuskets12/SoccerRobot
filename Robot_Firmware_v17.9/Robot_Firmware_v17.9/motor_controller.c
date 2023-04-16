@@ -7,17 +7,13 @@
 * closed loop speed controller with encoders for the drive motors and the open loop controller for the dribbler.
 */
 #include "motor_controller.h"
-//motor direction
-const char CCW = 1;
-const char CW = 0;
 
-//externs for printing
-extern float v_a[1000];
+//externs for printing/plotting purposes
+extern float v_fr[1000];
+extern float v_fl[1000];
+extern float v_br[1000];
+extern float v_bl[1000];
 extern int v_counter;
-extern float error_a[1000];
-extern float v_b[1000];
-extern float v_c[1000];
-extern float v_d[1000];
 
 //back left encoder
 extern long double back_left_counter;
@@ -32,11 +28,17 @@ static long double front_left_counter_old = 0;
 extern long double front_right_counter;
 static long double front_right_counter_old = 0;
 
-//sum of error
+//sum of errors
 static float error_sum_front_right=0;
 static float error_sum_front_left=0;
 static float error_sum_back_left=0;
 static float error_sum_back_right=0;
+//previous errors
+static float prev_error_front_right=0;
+static float prev_error_front_left=0;
+static float prev_error_back_left=0;
+static float prev_error_back_right=0;
+
 
 //initialize velocity constant once
 // angular velocity of motor shaft
@@ -44,12 +46,17 @@ float v_c_r = (2.00*PI)/(PPR*DELTA_T); //convert d(enc) to rad/s
 // linear velocity of wheel
 float v_c_l = (PI*W_DIAMETER)/(PPR*DELTA_T); //convert d(end) to m/s
 
-//resets error sum of certain PI controller to 0 based on new command
+//resets error sum of PID controller to 0, needs to be called at start of new target velocity
 void resetErrorSum(){
 	error_sum_front_left=0;
 	error_sum_front_right=0;
 	error_sum_back_left=0;
 	error_sum_back_right=0;
+	
+	prev_error_front_right=0;
+	prev_error_front_left=0;
+	prev_error_back_left=0;
+	prev_error_back_right=0;
 }
 
 //hardcoded wheel speed calculations
@@ -90,40 +97,37 @@ float wheel_speed_back_right(){
 float convert_linear_to_pwm(int flip, float error){
 	volatile float correction;
 	if(flip){
-		correction = PWM_ZERO - error*28.2*2 - 30;
-		correction = correction;
+		correction = PWM_ZERO - error*KP_M - DEADBAND;
 	}
-	else{correction = error*28.2*2 + PWM_ZERO + 30;}
+	else{correction = error*KP_M + PWM_ZERO + DEADBAND;}
 	
 	return correction;
 }
 
-//calculates efforts based on error target speed, [rad/s]
-//target speeds included from NPP 
-//maximum change in angular velocity is 285.71 rad/s
+//calculates efforts based on error target speed, each in [m/s]
 int wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br){
-	//calculate error for each motors
-	volatile float s = wheel_speed_front_left();
-	volatile float t = wheel_speed_front_right();
-	volatile float u = wheel_speed_back_left();
-	volatile float v = wheel_speed_back_right();
+	//calculate linear speed of each motor
+	volatile float fl_vel = wheel_speed_front_left();
+	volatile float fr_vel = wheel_speed_front_right();
+	volatile float bl_vel = wheel_speed_back_left();
+	volatile float br_vel = wheel_speed_back_right();
+	//calc error between target and set point
+	volatile float error_front_right = target_fr - fr_vel;
+	volatile float error_front_left = target_fl - fl_vel;
+	volatile float error_back_left = target_bl - bl_vel;
+	volatile float error_back_right = target_br - br_vel;
 	
-	volatile float error_front_right = target_fr - t;
-	volatile float error_front_left = target_fl - s;
-	volatile float error_back_left = target_bl - u;
-	volatile float error_back_right = target_br - v;
-	
-	//only check front left motor
-	/*if((float_abs(error_front_left) <= 0.05)){
-		return 1;
-	}*/
-	
-	//all motors within range
+	//determine if errors are within accepted range of velocities
 	/*if((float_abs(error_front_right) <= 0.1) && (float_abs(error_front_left) <= 0.1) && (float_abs(error_back_left) <= 0.1) && (float_abs(error_back_right) <= 0.1)){
 		return 1;
 	}*/
 	
-	//map [min_linear, max_linear] to [min_pwm, max_pwm] 
+	//only check front left motor (tuning purposes only)
+	/*if((float_abs(error_front_left) <= 0.05)){
+		return 1;
+	}*/
+	
+	//roughly map [min_linear, max_linear] to [min_pwm, max_pwm] (functions as KP)
 	error_front_right = convert_linear_to_pwm(0, error_front_right);
 	error_front_left = convert_linear_to_pwm(1, error_front_left);
 	error_back_right = convert_linear_to_pwm(1, error_back_right);
@@ -131,39 +135,56 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	
 	//update each error sum
 	error_sum_front_right += error_front_right;
-	error_sum_front_left += error_front_left;//error_front_left;
+	error_sum_front_left += error_front_left;
 	error_sum_back_left += error_back_left;
 	error_sum_back_right += error_sum_back_right;
 	
+	//update variable trackers for plotting afterward
 	if(v_counter <= 1000){
-		v_a[v_counter] = s;
-		v_b[v_counter] = t;
-		v_c[v_counter] = u;
-		v_d[v_counter] = v;
+		v_fr[v_counter] = fr_vel;
+		v_fl[v_counter] = fl_vel;
+		v_br[v_counter] = br_vel;
+		v_bl[v_counter] = bl_vel;
 		v_counter++;
 	}
 	
 	//check error sums against I-limit and adjust
-	//0
-	
+	//front right	
 	if ((error_sum_front_right)> PID_I_Limit) error_sum_front_right= PID_I_Limit;
 	if ((error_sum_front_right)< -PID_I_Limit) error_sum_front_right=-PID_I_Limit;
-	//1
+	//front left
 	if ((error_sum_front_left)> PID_I_Limit) error_sum_front_left= PID_I_Limit;
 	if ((error_sum_front_left)< -PID_I_Limit) error_sum_front_left=-PID_I_Limit;
-	//2
+	//back left
 	if ((error_sum_back_left)> PID_I_Limit) error_sum_back_left= PID_I_Limit;
 	if ((error_sum_back_left)< -PID_I_Limit) error_sum_back_left=-PID_I_Limit;
-	//3
+	//back right
 	if ((error_sum_back_right)> PID_I_Limit) error_sum_back_right= PID_I_Limit;
 	if ((error_sum_back_right)< -PID_I_Limit) error_sum_back_right=-PID_I_Limit;
 	
 	//compute efforts using PI control
+	//some PWM channels read the inverse of the 
+	//TODO: add KD for overshoot
 	float effort_front_right = KP * error_front_right + KI * error_sum_front_right;
 	float effort_front_left = KP * error_front_left - KI * error_sum_front_left;
 	float effort_back_left = KP * error_back_left - KI * error_sum_back_left;
 	float effort_back_right = KP * error_back_right - KI * error_sum_back_right;
 	
+	//PID version
+	/*
+	float effort_front_right = KP * error_front_right + KI * error_sum_front_right + KD * (error_front_right - prev_error_front_right);
+	float effort_front_left = KP * error_front_left - KI * error_sum_front_left - KD * (error_front_left - prev_error_front_left);
+	float effort_back_left = KP * error_back_left - KI * error_sum_back_left  - KD * (error_back_left - prev_error_back_left);
+	float effort_back_right = KP * error_back_right - KI * error_sum_back_right - KD * (error_back_right - prev_error_back_right);
+	//update previous errors
+	prev_error_front_right = error_front_right;
+	prev_error_front_left = error_front_left;
+	prev_error_back_right = error_back_right;
+	prev_error_back_left = error_back_left;
+	*/
+
+	
+	//set to middle of deadzone if zero velocity is desired
 	if(target_fr == 0){
 		effort_front_right = PWM_ZERO;
 	}
@@ -179,27 +200,26 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	if(target_br == 0){
 		effort_back_right = PWM_ZERO;
 	}
-	
-	//setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
-	setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
-	
-	//calculate the general min/max range of effort before mapping to PWM
-	//0
+	//threshold PWM signal
+	//front right
 	/*
 	effort_front_right = (effort_front_right >= PWM_MAX) ? PWM_MAX : effort_front_right;
 	effort_front_right = (effort_front_right <= PWM_MAX_NEG) ? PWM_MAX_NEG : effort_front_right;
-	//1
+	//front left
 	effort_front_left = (effort_front_left >= PWM_MAX) ? PWM_MAX : effort_front_left;
 	effort_front_left = (effort_front_left <= PWM_MAX_NEG) ? PWM_MAX_NEG : effort_front_left;
-	//2
+	//back left
 	effort_back_left = (effort_back_left >= PWM_MAX) ? PWM_MAX : effort_back_left;
 	effort_back_left = (effort_back_left <= PWM_MAX_NEG) ? PWM_MAX_NEG : effort_back_left;
-	//3
+	//back right
 	effort_back_right = (effort_back_right >= PWM_MAX) ? PWM_MAX : effort_back_right;
 	effort_back_right = (effort_back_right <= PWM_MAX_NEG) ? PWM_MAX_NEG : effort_back_right;
 	*/
 	
-	//still need correcting
+	//update motor efforts
+	setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
+
+	//still need effort adjustment
 	return 0;
 	
 
@@ -213,17 +233,12 @@ void setWheelMotorEffort(float effort_front_right, float effort_front_left, floa
 	set_pwm_drive_motor(1, effort_back_left);
 	set_pwm_drive_motor(2, effort_back_right);
 	set_pwm_drive_motor(3, effort_front_right);
-	//set directions for motors based on effort
-	/*gpio_set_pin_level(Motor_0_Dir, ((effort_front_right > 0) ? CCW : CW));
-	gpio_set_pin_level(Motor_1_Dir, ((effort_front_left > 0) ? CCW : CW));
-	gpio_set_pin_level(Motor_2_Dir, ((effort_back_left > 0) ? CCW : CW));
-	gpio_set_pin_level(Motor_3_Dir, ((effort_back_right > 0) ? CCW : CW));	*/
 }
 
 //dribbler target velocity in rad/s
 void setDribblerMotorEffort(){
 	int dribbler_pwm = velocity_motor_dribbler / V_CONSTANT_DRIBBLER;
-	gpio_set_pin_level(Dribbler_Motor_Dir, CCW);
+	//gpio_set_pin_level(Dribbler_Motor_Dir, CCW);
 	set_pwm_dribbler_motor(dribbler_pwm);	
 }
 

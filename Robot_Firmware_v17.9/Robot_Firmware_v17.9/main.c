@@ -17,19 +17,28 @@
 //temp definitions
 #define MOTOR_TARGET 1
 
-float v_a[1000];
-float error_a[1000];
-float v_b[1000];
-float v_c[1000];
-float v_d[1000];
+//motor velocity globals to be updated
+float fr_tv;
+float fl_tv;
+float br_tv;
+float bl_tv;
+
+float v_fr[1000];
+float v_fl[1000];
+float v_br[1000];
+float v_bl[1000];
 int v_counter=0;
 
+//counter for data points
+int timer_c=0;
 
 int main(void)
 {
-	//print out velocities
-	memset(v_a, 0, 1000);
-	memset(error_a, 0, 1000);
+	//set velocity trackers to 0
+	memset(v_fr, 0, 1000);
+	memset(v_fl, 0, 1000);
+	memset(v_br, 0, 1000);
+	memset(v_bl, 0, 1000);
 	
 	volatile float current_wheel_speed = 0.0;
 	
@@ -89,10 +98,27 @@ int main(void)
 	set_pwm_drive_motor(2, PWM_ZERO);
 	set_pwm_drive_motor(3, PWM_ZERO);
 	
+	fr_tv = 2.0;
+	fl_tv = 2.0;
+	bl_tv = 2.0;
+	br_tv = 2.0;
+	
 	delay_ms(4000);
 	
 	while (1) {
-		
+		if(timer_c >= 1000){
+			fr_tv=0;
+			fl_tv=0;
+			br_tv=0;
+			bl_tv=0;
+			/*
+			set_pwm_drive_motor(0, PWM_ZERO);
+			set_pwm_drive_motor(1, PWM_ZERO);
+			set_pwm_drive_motor(2, PWM_ZERO);
+			set_pwm_drive_motor(3, PWM_ZERO);
+			*/
+			break;
+		}
 		//process information sent from hub
 		if(nRF_24_is_data_available(1)){ //check to see if data was received
 			nRF24_receive_data(data_store);
@@ -153,12 +179,12 @@ int main(void)
 		}
 		target_speed_old = target_speed;*/
 		
-		//wheel and dribbler time
-		if(time_to_pid &&!pid_done){
+		//timer flag set & not at setpoints
+		if(time_to_pid && !pid_done){
 			/*pid
 			if((robot_stop == 1) || (robot_stop == 2)){
 			*/
-				pid_done = wheelMotorPID(2.0, 2.0, 2.0, 2.0);
+				pid_done = wheelMotorPID(fr_tv, fl_tv, bl_tv, br_tv);
 			}
 			/*
 			else{
@@ -170,9 +196,8 @@ int main(void)
 			robot_stop--;
 			*/
 			time_to_pid = 0;
+			timer_c++;
 			
-		
-		
 		//adc time
 		/*
 		if(time_to_adc){
@@ -193,7 +218,7 @@ int main(void)
 	
 }
 
-//"prints" the values velocity values during the tuning
+//"prints" the values velocity values after tuning using break point
 void print_pid_values(float *velocities){
 	int x=0;
 	float c_v;
@@ -202,7 +227,6 @@ void print_pid_values(float *velocities){
 	for(x; x<999; x++){
 		c_v = *(velocities+x);
 		y = 1;
-		
 	}
 	
 }

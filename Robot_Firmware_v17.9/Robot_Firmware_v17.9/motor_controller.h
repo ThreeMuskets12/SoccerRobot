@@ -21,17 +21,20 @@
 
 //PID constants
 #define KP (1.0)
+#define KP_M (56.4)
 #define KI (0.01)
-#define PID_I_Limit (7200) //need to be determined experimentally
+#define KD (0.00)
+#define PID_I_Limit (7200)
 #define FREQ (100) //desired PID freq.[Hz]
 #define DELTA_T (0.01) // [s]
+#define DEADBAND (30) //for deadband correction
 //math constants
 #define PI (3.1415)
-#define PWM_PER (2928*2) //2928 pulses per pwm period.
+#define PWM_PER (5856) //2928 pulses per pwm period.
 #define RATED_LOAD_W_D (545)// rated angular speed for dribbler motor [rad/s]
-#define PWM_MAX 2737*2
-#define PWM_ZERO 2455*2
-#define PWM_MAX_NEG 2143*2
+#define PWM_MAX 5474
+#define PWM_ZERO 4910
+#define PWM_MAX_NEG 4286
 #define V_CONSTANT_DRIBBLER (0.1859) //rad/s /PWM step
 
 
