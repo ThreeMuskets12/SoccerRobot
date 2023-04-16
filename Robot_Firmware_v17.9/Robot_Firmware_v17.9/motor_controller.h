@@ -20,9 +20,9 @@
 #define PPR (256) //variable encoder resolution
 
 //PID constants
-#define KP (0.9)
-#define KI (0.0001)
-#define PID_I_Limit (72) //need to be determined experimentally
+#define KP (1.0)
+#define KI (0.01)
+#define PID_I_Limit (7200) //need to be determined experimentally
 #define FREQ (100) //desired PID freq.[Hz]
 #define DELTA_T (0.01) // [s]
 //math constants

@@ -17,8 +17,20 @@
 //temp definitions
 #define MOTOR_TARGET 1
 
+float v_a[1000];
+float error_a[1000];
+float v_b[1000];
+float v_c[1000];
+float v_d[1000];
+int v_counter=0;
+
+
 int main(void)
 {
+	//print out velocities
+	memset(v_a, 0, 1000);
+	memset(error_a, 0, 1000);
+	
 	volatile float current_wheel_speed = 0.0;
 	
 	uint8_t robot_stop = 0;
@@ -142,10 +154,13 @@ int main(void)
 		target_speed_old = target_speed;*/
 		
 		//wheel and dribbler time
-		if(time_to_pid){// && !pid_done){
+		if(time_to_pid &&!pid_done){
+			/*pid
 			if((robot_stop == 1) || (robot_stop == 2)){
-			pid_done = wheelMotorPID(0, 0, 0, 0);
+			*/
+				pid_done = wheelMotorPID(2.0, 2.0, 2.0, 2.0);
 			}
+			/*
 			else{
 				wheelMotorPID(0, 0, 0, 0);
 				set_LEDs(1);
@@ -153,16 +168,40 @@ int main(void)
 			set_LEDs(pid_done);
 			//set_pwm_dribbler_motor(100);
 			robot_stop--;
+			*/
 			time_to_pid = 0;
-		}
+			
+		
 		
 		//adc time
+		/*
 		if(time_to_adc){
 			adc_read(&adc_value_battery_current, ADC_BATTERY_CURRENT);
 			adc_read(&adc_value_battery_voltage, ADC_BATTERY_VOLTAGE);
 			adc_read(&adc_value_cap_charge, ADC_CAP_CHARGE);
 			time_to_adc = 0;
-		}
+		}*/
+		/*if(pid_done){
+			//print_pid_values(v_a);
+			if(v_counter <= 999){
+				volatile float p = -wheel_speed_front_left();
+				v_a[v_counter] = p;
+			}
+		} */
+	}
+	
+	
+}
+
+//"prints" the values velocity values during the tuning
+void print_pid_values(float *velocities){
+	int x=0;
+	float c_v;
+	int y = 0;
+	
+	for(x; x<999; x++){
+		c_v = *(velocities+x);
+		y = 1;
 		
 	}
 	

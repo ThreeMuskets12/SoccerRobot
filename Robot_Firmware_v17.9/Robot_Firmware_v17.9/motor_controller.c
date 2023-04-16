@@ -11,6 +11,14 @@
 const char CCW = 1;
 const char CW = 0;
 
+//externs for printing
+extern float v_a[1000];
+extern int v_counter;
+extern float error_a[1000];
+extern float v_b[1000];
+extern float v_c[1000];
+extern float v_d[1000];
+
 //back left encoder
 extern long double back_left_counter;
 static long double back_left_counter_old = 0;
@@ -96,16 +104,19 @@ float convert_linear_to_pwm(int flip, float error){
 int wheelMotorPID(float target_fr, float target_fl, float target_bl, float target_br){
 	//calculate error for each motors
 	volatile float s = wheel_speed_front_left();
-	volatile float error_front_right = target_fr - wheel_speed_front_right();
-	volatile float error_front_left = target_fl - s;
-	volatile float error_back_left = target_bl - wheel_speed_back_left();
-	volatile float error_back_right = target_br - wheel_speed_back_right();
+	volatile float t = wheel_speed_front_right();
+	volatile float u = wheel_speed_back_left();
+	volatile float v = wheel_speed_back_right();
 	
-	//update each error sum
-	error_sum_front_right += error_front_right;
-	error_sum_front_left += error_front_left;//error_front_left;
-	error_sum_back_left += error_back_left;
-	error_sum_back_right += error_sum_back_right;
+	volatile float error_front_right = target_fr - t;
+	volatile float error_front_left = target_fl - s;
+	volatile float error_back_left = target_bl - u;
+	volatile float error_back_right = target_br - v;
+	
+	//only check front left motor
+	/*if((float_abs(error_front_left) <= 0.05)){
+		return 1;
+	}*/
 	
 	//all motors within range
 	/*if((float_abs(error_front_right) <= 0.1) && (float_abs(error_front_left) <= 0.1) && (float_abs(error_back_left) <= 0.1) && (float_abs(error_back_right) <= 0.1)){
@@ -117,6 +128,20 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	error_front_left = convert_linear_to_pwm(1, error_front_left);
 	error_back_right = convert_linear_to_pwm(1, error_back_right);
 	error_back_left = convert_linear_to_pwm(1, error_back_left);
+	
+	//update each error sum
+	error_sum_front_right += error_front_right;
+	error_sum_front_left += error_front_left;//error_front_left;
+	error_sum_back_left += error_back_left;
+	error_sum_back_right += error_sum_back_right;
+	
+	if(v_counter <= 1000){
+		v_a[v_counter] = s;
+		v_b[v_counter] = t;
+		v_c[v_counter] = u;
+		v_d[v_counter] = v;
+		v_counter++;
+	}
 	
 	//check error sums against I-limit and adjust
 	//0
@@ -135,9 +160,9 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	
 	//compute efforts using PI control
 	float effort_front_right = KP * error_front_right + KI * error_sum_front_right;
-	float effort_front_left = KP * error_front_left + KI * error_sum_front_left;
-	float effort_back_left = KP * error_back_left + KI * error_sum_back_left;
-	float effort_back_right = KP * error_back_right + KI * error_sum_back_right;
+	float effort_front_left = KP * error_front_left - KI * error_sum_front_left;
+	float effort_back_left = KP * error_back_left - KI * error_sum_back_left;
+	float effort_back_right = KP * error_back_right - KI * error_sum_back_right;
 	
 	if(target_fr == 0){
 		effort_front_right = PWM_ZERO;
@@ -155,6 +180,7 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 		effort_back_right = PWM_ZERO;
 	}
 	
+	//setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
 	setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
 	
 	//calculate the general min/max range of effort before mapping to PWM
