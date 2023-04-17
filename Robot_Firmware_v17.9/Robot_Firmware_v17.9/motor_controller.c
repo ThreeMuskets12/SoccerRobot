@@ -117,6 +117,12 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	volatile float error_back_left = target_bl - bl_vel;
 	volatile float error_back_right = target_br - br_vel;
 	
+	//update each error sum
+	error_sum_front_right += error_front_right;
+	error_sum_front_left += error_front_left;
+	error_sum_back_left += error_back_left;
+	error_sum_back_right += error_sum_back_right;
+	
 	//determine if errors are within accepted range of velocities
 	/*if((float_abs(error_front_right) <= 0.1) && (float_abs(error_front_left) <= 0.1) && (float_abs(error_back_left) <= 0.1) && (float_abs(error_back_right) <= 0.1)){
 		return 1;
@@ -126,19 +132,12 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	/*if((float_abs(error_front_left) <= 0.05)){
 		return 1;
 	}*/
-	
 	//roughly map [min_linear, max_linear] to [min_pwm, max_pwm] (functions as KP)
 	error_front_right = convert_linear_to_pwm(0, error_front_right);
 	error_front_left = convert_linear_to_pwm(1, error_front_left);
 	error_back_right = convert_linear_to_pwm(1, error_back_right);
 	error_back_left = convert_linear_to_pwm(1, error_back_left);
-	
-	//update each error sum
-	error_sum_front_right += error_front_right;
-	error_sum_front_left += error_front_left;
-	error_sum_back_left += error_back_left;
-	error_sum_back_right += error_sum_back_right;
-	
+
 	//update variable trackers for plotting afterward
 	if(v_counter <= 1000){
 		v_fr[v_counter] = fr_vel;
@@ -150,6 +149,7 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	
 	//check error sums against I-limit and adjust
 	//front right	
+	/*
 	if ((error_sum_front_right)> PID_I_Limit) error_sum_front_right= PID_I_Limit;
 	if ((error_sum_front_right)< -PID_I_Limit) error_sum_front_right=-PID_I_Limit;
 	//front left
@@ -161,6 +161,7 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	//back right
 	if ((error_sum_back_right)> PID_I_Limit) error_sum_back_right= PID_I_Limit;
 	if ((error_sum_back_right)< -PID_I_Limit) error_sum_back_right=-PID_I_Limit;
+	*/
 	
 	//compute efforts using PI control
 	//some PWM channels read the inverse of the 

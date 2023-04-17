@@ -98,7 +98,7 @@ int main(void)
 	fr_tv = 0.0;
 	fl_tv = 0.0;
 	bl_tv = 0.0;
-	br_tv = 5.0;
+	br_tv = 3.0;
 	
 	delay_ms(4000);
 	
@@ -181,19 +181,8 @@ int main(void)
 		//timer flag set & not at setpoints
 		if(time_to_pid){// && !pid_done){
 			//pid
-			if((robot_stop <= 0) || (robot_stop > 10)){
-				setWheelMotorEffort(PWM_ZERO, PWM_ZERO, PWM_ZERO, PWM_ZERO);
-				gpio_set_pin_level(LED3, true);
-			}
-			else if(!pid_done){
-				pid_done = wheelMotorPID(velocity_motor_fr, velocity_motor_fl, velocity_motor_bl, velocity_motor_br);
-				gpio_set_pin_level(LED3, false);
-			}
-			
-			gpio_set_pin_level(LED0, pid_done);
+			wheelMotorPID(fr_tv, fl_tv, bl_tv, br_tv);
 			//set_pwm_dribbler_motor(100);
-			robot_stop--;
-			
 			time_to_pid = 0;
 			timer_c++;
 			
