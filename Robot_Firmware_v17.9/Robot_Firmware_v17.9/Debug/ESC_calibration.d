@@ -161,7 +161,7 @@ ESC_calibration.d ESC_calibration.o: .././ESC_calibration.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_pthreadtypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\types.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
- .././NPP.h .././encoders.h
+ .././NPP.h .././dipswitch_and_LEDs.h .././encoders.h
 
 .././PWM_driver.h:
 
@@ -580,5 +580,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h:
 
 .././NPP.h:
+
+.././dipswitch_and_LEDs.h:
 
 .././encoders.h:

@@ -16100,7 +16100,7 @@ OUTPUT(RobotFirmwarev15.elf elf32-littlearm)
  .debug_line    0x00018dab      0xd99 stdio_redirect/stdio_io.o
  .debug_line    0x00019b44      0xfac stdio_start.o
 
-.debug_str      0x00000000   0x1590d1
+.debug_str      0x00000000   0x1590d5
  .debug_str     0x00000000   0x13e94d atmel_start.o
                              0x13f3ce (size before relaxing)
  .debug_str     0x0013e94d      0x78d Device_Startup/startup_samv71q21b.o
@@ -16149,17 +16149,17 @@ OUTPUT(RobotFirmwarev15.elf elf32-littlearm)
                              0x13b8fc (size before relaxing)
  .debug_str     0x00157496     0x128c hpl/usart/hpl_usart.o
                              0x13cb1f (size before relaxing)
- .debug_str     0x00158722      0x78d main.o
-                             0x13fb89 (size before relaxing)
- .debug_str     0x00158eaf      0x153 nRF24_driver.o
+ .debug_str     0x00158722      0x791 main.o
+                             0x13fb8d (size before relaxing)
+ .debug_str     0x00158eb3      0x153 nRF24_driver.o
                              0x13fbac (size before relaxing)
- .debug_str     0x00159002       0x2b stdio_redirect/gcc/read.o
+ .debug_str     0x00159006       0x2b stdio_redirect/gcc/read.o
                              0x13e571 (size before relaxing)
- .debug_str     0x0015902d       0x2d stdio_redirect/gcc/write.o
+ .debug_str     0x00159031       0x2d stdio_redirect/gcc/write.o
                              0x13e573 (size before relaxing)
- .debug_str     0x0015905a       0x4b stdio_redirect/stdio_io.o
+ .debug_str     0x0015905e       0x4b stdio_redirect/stdio_io.o
                              0x13e5fa (size before relaxing)
- .debug_str     0x001590a5       0x2c stdio_start.o
+ .debug_str     0x001590a9       0x2c stdio_start.o
                              0x13f3fe (size before relaxing)
 
 .debug_frame    0x00000000     0x2ad4

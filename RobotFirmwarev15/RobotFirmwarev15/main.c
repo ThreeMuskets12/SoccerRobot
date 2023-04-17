@@ -62,10 +62,10 @@ int main(void)
 	//setup_BQ7_for_adc(buffer, CELL_2);
 	//setup_BQ7_for_adc(buffer, CELL_3);
 	
-	float target_speed_0 = 0;
-	float target_speed_1 = 0;
-	float target_speed_2 = 0;
-	float target_speed_3 = 0;
+	float target_speed_fl = 0;
+	float target_speed_bl = 0;
+	float target_speed_br = 0;
+	float target_speed_fr = 0;
 	
 	while (1) {
 		/*There are two ways to read information from the IMU: See the driver manual for more information. Shown here is mode 0,
@@ -104,20 +104,20 @@ int main(void)
 		//float f = 32.3;
 		//set_ref_voltage(buffer, 1);
 		
-		target_speed_0 = 1.0;
-		target_speed_1 = 1.0;
-		target_speed_2 = 1.0;
-		target_speed_3 = 1.0;
+		target_speed_fl = 2;
+		target_speed_bl = 2;
+		target_speed_br = -3.5;
+		target_speed_fr = -3.5;
 		
 		//for(int i = 0; i<DRIVE_TIME; i++){
-		data_store[0] = 2;
-		float_to_two_byte(target_speed_0, &data_store[0], 1);
-		float_to_two_byte(target_speed_1, &data_store[0], 3);
-		float_to_two_byte(target_speed_2, &data_store[0], 5);
-		float_to_two_byte(target_speed_3, &data_store[0], 7);
+		data_store[0] = (10 << 4) + 0;
+		float_to_two_byte(target_speed_fl, &data_store[0], 1);
+		float_to_two_byte(target_speed_bl, &data_store[0], 3);
+		float_to_two_byte(target_speed_br, &data_store[0], 5);
+		float_to_two_byte(target_speed_fr, &data_store[0], 7);
 		nRF24_transmit(&data_store[0]);
 		memset(&data_store[0], 0, sizeof(uint8_t)*32);
-		delay_ms(5);
+		delay_ms(25);
 		//}
 		
 		

@@ -31,9 +31,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  13 .debug_line   0001aaf0  00000000  00000000  00095ea4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    001590d1  00000000  00000000  000b0994  2**0
+ 14 .debug_str    001590d5  00000000  00000000  000b0994  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_frame  00002ad4  00000000  00000000  00209a68  2**2
+ 15 .debug_frame  00002ad4  00000000  00000000  00209a6c  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -4555,77 +4555,78 @@ void float_to_two_byte(float velocity, uint8_t data[], uint8_t byte_location){
   4019b8:	b530      	push	{r4, r5, lr}
   4019ba:	b089      	sub	sp, #36	; 0x24
 	atmel_start_init();
-  4019bc:	4b1c      	ldr	r3, [pc, #112]	; (401a30 <main+0x78>)
+  4019bc:	4b1b      	ldr	r3, [pc, #108]	; (401a2c <main+0x74>)
   4019be:	4798      	blx	r3
 	memset(&data_store[0], 0, sizeof(uint8_t)*32);
   4019c0:	2220      	movs	r2, #32
   4019c2:	2100      	movs	r1, #0
   4019c4:	4668      	mov	r0, sp
-  4019c6:	4b1b      	ldr	r3, [pc, #108]	; (401a34 <main+0x7c>)
+  4019c6:	4b1a      	ldr	r3, [pc, #104]	; (401a30 <main+0x78>)
   4019c8:	4798      	blx	r3
 	data_store[0] = 0b1111;
   4019ca:	230f      	movs	r3, #15
   4019cc:	f88d 3000 	strb.w	r3, [sp]
 	nRF24_init(data_store);
   4019d0:	4668      	mov	r0, sp
-  4019d2:	4b19      	ldr	r3, [pc, #100]	; (401a38 <main+0x80>)
+  4019d2:	4b18      	ldr	r3, [pc, #96]	; (401a34 <main+0x7c>)
   4019d4:	4798      	blx	r3
 	delay_us(500); //Should be 200 us, setting higher for testing
   4019d6:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
-  4019da:	4b18      	ldr	r3, [pc, #96]	; (401a3c <main+0x84>)
+  4019da:	4b17      	ldr	r3, [pc, #92]	; (401a38 <main+0x80>)
   4019dc:	4798      	blx	r3
 	adc_sync_enable_channel(&ADC_0, 0);
   4019de:	2100      	movs	r1, #0
-  4019e0:	4817      	ldr	r0, [pc, #92]	; (401a40 <main+0x88>)
-  4019e2:	4b18      	ldr	r3, [pc, #96]	; (401a44 <main+0x8c>)
+  4019e0:	4816      	ldr	r0, [pc, #88]	; (401a3c <main+0x84>)
+  4019e2:	4b17      	ldr	r3, [pc, #92]	; (401a40 <main+0x88>)
   4019e4:	4798      	blx	r3
-		data_store[0] = 2;
+		data_store[0] = (10 << 4) + 0;
   4019e6:	ac08      	add	r4, sp, #32
-  4019e8:	2302      	movs	r3, #2
+  4019e8:	23a0      	movs	r3, #160	; 0xa0
   4019ea:	f804 3d20 	strb.w	r3, [r4, #-32]!
-		float_to_two_byte(target_speed_0, &data_store[0], 1);
+		float_to_two_byte(target_speed_fl, &data_store[0], 1);
   4019ee:	2201      	movs	r2, #1
   4019f0:	4621      	mov	r1, r4
-  4019f2:	f04f 507e 	mov.w	r0, #1065353216	; 0x3f800000
-  4019f6:	4d14      	ldr	r5, [pc, #80]	; (401a48 <main+0x90>)
+  4019f2:	f04f 4080 	mov.w	r0, #1073741824	; 0x40000000
+  4019f6:	4d13      	ldr	r5, [pc, #76]	; (401a44 <main+0x8c>)
   4019f8:	47a8      	blx	r5
-		float_to_two_byte(target_speed_1, &data_store[0], 3);
+		float_to_two_byte(target_speed_bl, &data_store[0], 3);
   4019fa:	2203      	movs	r2, #3
   4019fc:	4621      	mov	r1, r4
-  4019fe:	f04f 507e 	mov.w	r0, #1065353216	; 0x3f800000
+  4019fe:	f04f 4080 	mov.w	r0, #1073741824	; 0x40000000
   401a02:	47a8      	blx	r5
-		float_to_two_byte(target_speed_2, &data_store[0], 5);
+		float_to_two_byte(target_speed_br, &data_store[0], 5);
   401a04:	2205      	movs	r2, #5
   401a06:	4621      	mov	r1, r4
-  401a08:	f04f 507e 	mov.w	r0, #1065353216	; 0x3f800000
-  401a0c:	47a8      	blx	r5
-		float_to_two_byte(target_speed_3, &data_store[0], 7);
-  401a0e:	2207      	movs	r2, #7
-  401a10:	4621      	mov	r1, r4
-  401a12:	f04f 507e 	mov.w	r0, #1065353216	; 0x3f800000
-  401a16:	47a8      	blx	r5
+  401a08:	480f      	ldr	r0, [pc, #60]	; (401a48 <main+0x90>)
+  401a0a:	47a8      	blx	r5
+		float_to_two_byte(target_speed_fr, &data_store[0], 7);
+  401a0c:	2207      	movs	r2, #7
+  401a0e:	4621      	mov	r1, r4
+  401a10:	480d      	ldr	r0, [pc, #52]	; (401a48 <main+0x90>)
+  401a12:	47a8      	blx	r5
 		nRF24_transmit(&data_store[0]);
-  401a18:	4620      	mov	r0, r4
-  401a1a:	4b0c      	ldr	r3, [pc, #48]	; (401a4c <main+0x94>)
-  401a1c:	4798      	blx	r3
+  401a14:	4620      	mov	r0, r4
+  401a16:	4b0d      	ldr	r3, [pc, #52]	; (401a4c <main+0x94>)
+  401a18:	4798      	blx	r3
 		memset(&data_store[0], 0, sizeof(uint8_t)*32);
-  401a1e:	2220      	movs	r2, #32
-  401a20:	2100      	movs	r1, #0
-  401a22:	4620      	mov	r0, r4
-  401a24:	4b03      	ldr	r3, [pc, #12]	; (401a34 <main+0x7c>)
-  401a26:	4798      	blx	r3
-		delay_ms(5);
-  401a28:	2005      	movs	r0, #5
-  401a2a:	4b09      	ldr	r3, [pc, #36]	; (401a50 <main+0x98>)
-  401a2c:	4798      	blx	r3
-  401a2e:	e7da      	b.n	4019e6 <main+0x2e>
-  401a30:	004001d5 	.word	0x004001d5
-  401a34:	00401e2d 	.word	0x00401e2d
-  401a38:	00401be9 	.word	0x00401be9
-  401a3c:	004006a9 	.word	0x004006a9
-  401a40:	204000e0 	.word	0x204000e0
-  401a44:	0040064d 	.word	0x0040064d
-  401a48:	0040198d 	.word	0x0040198d
+  401a1a:	2220      	movs	r2, #32
+  401a1c:	2100      	movs	r1, #0
+  401a1e:	4620      	mov	r0, r4
+  401a20:	4b03      	ldr	r3, [pc, #12]	; (401a30 <main+0x78>)
+  401a22:	4798      	blx	r3
+		delay_ms(25);
+  401a24:	2019      	movs	r0, #25
+  401a26:	4b0a      	ldr	r3, [pc, #40]	; (401a50 <main+0x98>)
+  401a28:	4798      	blx	r3
+  401a2a:	e7dc      	b.n	4019e6 <main+0x2e>
+  401a2c:	004001d5 	.word	0x004001d5
+  401a30:	00401e2d 	.word	0x00401e2d
+  401a34:	00401be9 	.word	0x00401be9
+  401a38:	004006a9 	.word	0x004006a9
+  401a3c:	204000e0 	.word	0x204000e0
+  401a40:	0040064d 	.word	0x0040064d
+  401a44:	0040198d 	.word	0x0040198d
+  401a48:	c0600000 	.word	0xc0600000
   401a4c:	00401ca1 	.word	0x00401ca1
   401a50:	004006c9 	.word	0x004006c9
 

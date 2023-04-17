@@ -27,6 +27,8 @@ float v_fr[1000];
 float v_fl[1000];
 float v_br[1000];
 float v_bl[1000];
+float e_br[1000];
+float ens_br[1000];
 int v_counter=0;
 
 //counter for data points
@@ -42,7 +44,7 @@ int main(void)
 	
 	volatile float current_wheel_speed = 0.0;
 	
-	uint8_t robot_stop = 0;
+	uint16_t robot_stop = 0;
 	
 	atmel_start_init();
 	
@@ -67,11 +69,6 @@ int main(void)
 	pwm_enable(&PWM_1);
 	
 	int pid_done = 0;
-	
-	volatile float target_speed_0 = 0;
-	volatile float target_speed_1 = 0;
-	volatile float target_speed_2 = 0;
-	volatile float target_speed_3 = 0;
 	
 	//disable motors
 	set_pwm_drive_motor(0, 0);
@@ -98,36 +95,38 @@ int main(void)
 	set_pwm_drive_motor(2, PWM_ZERO);
 	set_pwm_drive_motor(3, PWM_ZERO);
 	
-	fr_tv = 2.0;
-	fl_tv = 2.0;
-	bl_tv = 2.0;
-	br_tv = 2.0;
+	fr_tv = 0.0;
+	fl_tv = 0.0;
+	bl_tv = 0.0;
+	br_tv = 5.0;
 	
 	delay_ms(4000);
 	
 	while (1) {
+		/*
 		if(timer_c >= 1000){
 			fr_tv=0;
 			fl_tv=0;
 			br_tv=0;
 			bl_tv=0;
-			/*
-			set_pwm_drive_motor(0, PWM_ZERO);
-			set_pwm_drive_motor(1, PWM_ZERO);
-			set_pwm_drive_motor(2, PWM_ZERO);
-			set_pwm_drive_motor(3, PWM_ZERO);
-			*/
+			
+			//set_pwm_drive_motor(0, PWM_ZERO);
+			//set_pwm_drive_motor(1, PWM_ZERO);
+			//set_pwm_drive_motor(2, PWM_ZERO);
+			//set_pwm_drive_motor(3, PWM_ZERO);
+			
 			break;
-		}
+		} 
+		*/
 		//process information sent from hub
 		if(nRF_24_is_data_available(1)){ //check to see if data was received
 			nRF24_receive_data(data_store);
-			//NPP_process(&data_store[0], &robot_ID); //process data
-			robot_stop = data_store[0];
-			two_byte_to_float(target_speed_0, &data_store[0], 1);
-			two_byte_to_float(target_speed_1, &data_store[0], 3);
-			two_byte_to_float(target_speed_2, &data_store[0], 5);
-			two_byte_to_float(target_speed_3, &data_store[0], 7);
+			NPP_process(&data_store[0], &robot_ID, &robot_stop); //process data
+			/*robot_stop = data_store[0];
+			two_byte_to_float(&target_speed_fl, &data_store[0], 1);
+			two_byte_to_float(&target_speed_bl, &data_store[0], 3);
+			two_byte_to_float(&target_speed_br, &data_store[0], 5);
+			two_byte_to_float(&target_speed_fr, &data_store[0], 7);*/
 			//gpio_set_pin_level(LED1, data_store[9]);
 			//gpio_set_pin_level(LED2, data_store[10]);
 			//gpio_set_pin_level(LED3, data_store[11]);
@@ -180,21 +179,21 @@ int main(void)
 		target_speed_old = target_speed;*/
 		
 		//timer flag set & not at setpoints
-		if(time_to_pid && !pid_done){
-			/*pid
-			if((robot_stop == 1) || (robot_stop == 2)){
-			*/
-				pid_done = wheelMotorPID(fr_tv, fl_tv, bl_tv, br_tv);
+		if(time_to_pid){// && !pid_done){
+			//pid
+			if((robot_stop <= 0) || (robot_stop > 10)){
+				setWheelMotorEffort(PWM_ZERO, PWM_ZERO, PWM_ZERO, PWM_ZERO);
+				gpio_set_pin_level(LED3, true);
 			}
-			/*
-			else{
-				wheelMotorPID(0, 0, 0, 0);
-				set_LEDs(1);
+			else if(!pid_done){
+				pid_done = wheelMotorPID(velocity_motor_fr, velocity_motor_fl, velocity_motor_bl, velocity_motor_br);
+				gpio_set_pin_level(LED3, false);
 			}
-			set_LEDs(pid_done);
+			
+			gpio_set_pin_level(LED0, pid_done);
 			//set_pwm_dribbler_motor(100);
 			robot_stop--;
-			*/
+			
 			time_to_pid = 0;
 			timer_c++;
 			
@@ -211,8 +210,8 @@ int main(void)
 			if(v_counter <= 999){
 				volatile float p = -wheel_speed_front_left();
 				v_a[v_counter] = p;
-			}
-		} */
+			}*/
+		}
 	}
 	
 	
