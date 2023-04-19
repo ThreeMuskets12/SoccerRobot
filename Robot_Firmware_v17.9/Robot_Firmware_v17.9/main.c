@@ -95,18 +95,17 @@ int main(void)
 	set_pwm_drive_motor(2, PWM_ZERO);
 	set_pwm_drive_motor(3, PWM_ZERO);
 	
-	fr_tv = 0.0;
+	fr_tv = -1.0;
 	fl_tv = 0.0;
 	bl_tv = 0.0;
-	br_tv = 3.0;
+	br_tv = 0.0;
 	
 	delay_ms(4000);
 	
 	while (1) {
-		/*
-		if(timer_c >= 1000){
-			fr_tv=0;
-			fl_tv=0;
+		/*if(timer_c >= 1000){
+			fr_tv=0.0;
+			fl_tv=0.0;
 			br_tv=0;
 			bl_tv=0;
 			
@@ -114,10 +113,8 @@ int main(void)
 			//set_pwm_drive_motor(1, PWM_ZERO);
 			//set_pwm_drive_motor(2, PWM_ZERO);
 			//set_pwm_drive_motor(3, PWM_ZERO);
-			
-			break;
-		} 
-		*/
+		} */
+		
 		//process information sent from hub
 		if(nRF_24_is_data_available(1)){ //check to see if data was received
 			nRF24_receive_data(data_store);

@@ -121,7 +121,7 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	error_sum_front_right += error_front_right;
 	error_sum_front_left += error_front_left;
 	error_sum_back_left += error_back_left;
-	error_sum_back_right += error_sum_back_right;
+	error_sum_back_right += error_back_right;
 	
 	//determine if errors are within accepted range of velocities
 	/*if((float_abs(error_front_right) <= 0.1) && (float_abs(error_front_left) <= 0.1) && (float_abs(error_back_left) <= 0.1) && (float_abs(error_back_right) <= 0.1)){
@@ -218,7 +218,8 @@ int wheelMotorPID(float target_fr, float target_fl, float target_bl, float targe
 	*/
 	
 	//update motor efforts
-	setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
+	//setWheelMotorEffort(effort_front_right, effort_front_left, effort_back_left, effort_back_right);
+	setWheelMotorEffort(effort_front_right, effort_front_left, PWM_ZERO, PWM_ZERO);
 
 	//still need effort adjustment
 	return 0;
